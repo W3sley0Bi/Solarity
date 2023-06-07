@@ -4,6 +4,8 @@ const config = require('../../../config');
 const { hashSync, compareSync } = require('bcrypt')
 const jwt = require('jsonwebtoken');
 
+
+//put the value of the foreign key dynamic
 async function registration(req, res, next) {
 	try {
 		 	db.query(`INSERT INTO user (name, password, role_fk) VALUES (
@@ -76,8 +78,63 @@ async function login(req, res, next) {
 	}
 }
 
+async function deleteProfile(req, res, next){
+	try {
+		db.query(`DELETE FROM user WHERE idUser='${req.body.idUser}' AND name='${req.body.username}'`, 
+		(err, result, fields) => {
+		 if (err) throw err
+	   return res.status(201).json({ message: 'User Deleted' })});
+
+} catch (err) {
+   res.status(400).json({ message: err.message });
+   next(err);
+}
+}
+
+async function updateProfile(req, res, next){
+	try {
+		db.query(`UPDATE user SET name='${req.body.username}', password='${hashSync(req.body.password,10)}'  WHERE idUser='${req.body.idUser}'`, 
+		(err, result, fields) => {
+		 if (err) throw err
+	   return res.status(201).json({ message: 'Profile data updated' })});
+
+} catch (err) {
+   res.status(400).json({ message: err.message });
+   next(err);
+}
+}
+
+//did tested yet
+async function updateToPremium(req, res, next){
+	try {
+		db.query(`UPDATE user SET role_fk='3' WHERE idUser='${req.body.idUser}'`, 
+		(err, result, fields) => {
+		 if (err) throw err
+	   return res.status(201).json({ message: 'Premium Account Activated' })});
+
+} catch (err) {
+   res.status(400).json({ message: err.message });
+   next(err);
+}
+}
+
+
+async function showProfile(req, res, next){
+	try {
+		db.query(`SELECT * FROM user WHERE name='${req.body.username}' `, (err, result, fields) =>{
+			return res.status(201).json({result: result});
+		})
+	}catch(err) {
+			res.status(400).json({ message: err });
+			next(err);
+		 }
+}
 
 module.exports = {
 	registration,
-	login
+	login,
+	deleteProfile,
+	updateProfile,
+	showProfile,
+	updateToPremium
 };

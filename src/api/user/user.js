@@ -5,7 +5,7 @@ async function workers(req, res, next) {
   try {
     if (req.user[0].role_fk == 1) {
       db.query(
-        `SELECT role_fk,idUser,name,surname FROM user`,
+        `SELECT role_fk,idUser FROM user`,
         (err, result, fields) => {
           console.log(result);
           if (result.length === 0) return res.status(401).json({ message: `No token found` });

@@ -22,6 +22,27 @@ router.post('/login', async (req,res,next) =>{
     await auth.login(req,res,next);
 });
 
+router.post('/deleteProfile', async (req,res,next) =>{    
+    await auth.deleteProfile(req,res,next);
+});
+
+router.post('/updateProfile', async (req,res,next) =>{    
+    await auth.updateProfile(req,res,next);
+});
+
+router.post('/showProfile', async (req,res,next) =>{    
+    await auth.showProfile(req,res,next);
+});
+
+//api not tested
+router.post('/updateToPremium', async (req,res,next) =>{    
+    await auth.updateToPremium(req,res,next);
+});
+
+
+
+
+
 // Users /////////////////////////////////////////////
 router.get('/workers', passport.authenticate('jwt', { session: false }), async (req,res,next) =>{    
     await user.workers(req,res,next);
