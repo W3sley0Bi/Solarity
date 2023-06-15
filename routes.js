@@ -4,7 +4,7 @@ const auth = require('./src/api/auth/auth');
 const user = require('./src/api/user/user');
 const form = require('./src/api/formHandler/fillPDF')
 const passport = require('passport');
-const {deleteFile} = require('./src/api/delete/deleteFunctions')
+const {deleteProject} = require('./src/api/delete/deleteFunctions')
 
 // passport.authenticate('jwt', { session: false }),
 
@@ -72,10 +72,10 @@ router.post(`/deleteFile`, passport.authenticate('jwt', { session: false }),asyn
     
 });
 
-// router.delete(`/deleteFolder`, passport.authenticate('jwt', { session: false }),async (req,res,next)=>{
-// 	await form.deleteFolder(req,res,next);
+router.post(`/deleteProject`, passport.authenticate('jwt', { session: false }),async (req,res,next)=>{
+	await deleteProject(req,res,next);
     
-// });
+});
 
 // router.delete(`/deleteUser`, passport.authenticate('jwt', { session: false }),async (req,res,next)=>{
 // 	await form.DeleteUser(req,res,next);

@@ -79,8 +79,9 @@ async function login(req, res, next) {
 }
 
 async function deleteProfile(req, res, next){
+	console.log(req.body.Uid)
 	try {
-		db.query(`DELETE FROM user WHERE idUser='${req.body.idUser}' AND name='${req.body.username}'`, 
+		db.query(`DELETE FROM user WHERE idUser='${req.body.Uid}'`, 
 		(err, result, fields) => {
 		 if (err) throw err
 	   return res.status(201).json({ message: 'User Deleted' })});
@@ -121,8 +122,8 @@ async function updateToPremium(req, res, next){
 
 async function showProfile(req, res, next){
 	try {
-		db.query(`SELECT * FROM user WHERE name='${req.body.username}' `, (err, result, fields) =>{
-			return res.status(201).json({result: result});
+		db.query(`SELECT * FROM user WHERE idUser='${req.body.Uid}' `, (err, result, fields) =>{
+			return res.status(201).json({result});
 		})
 	}catch(err) {
 			res.status(400).json({ message: err });

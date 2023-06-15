@@ -8,7 +8,7 @@ const config = {
       password: process.env.DB_PWD,
       database: process.env.DB_NAME,
       port: process.env.DB_PORT,
-      connectionLimit: process.env.CONN_LIMIT,
+      // connectionLimit: process.env.CONN_LIMIT,
     },
     port: process.env.PORT ? process.env.PORT : 3001,
     jwt: process.env.SECRETJWT ? process.env.SECRETJWT : "forzaNapoli",

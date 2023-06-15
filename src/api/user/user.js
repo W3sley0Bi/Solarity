@@ -60,7 +60,7 @@ async function addFolder(req, res, next) {
 async function userFolder(req, res, next) {
   try {
 
-	db.query(`SELECT idFolder, name, assigned_worker_id FROM folder WHERE assigned_worker_id = '${req.params.Uid}' `, 
+	db.query(`SELECT idProject, name, assigned_user_id, status, duration, start_date FROM projects WHERE assigned_user_id = '${req.params.Uid}' `, 
 	(err, result, fields) =>{
 		console.log(result[0]);
 	  if (err) throw err;
