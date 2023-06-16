@@ -1,6 +1,7 @@
 const config = require("../../../config");
 const { db } = require("../../modules/DBConnection");
 
+//test user list api for super user
 async function workers(req, res, next) {
   try {
     if (req.user[0].role_fk == 1) {
@@ -22,33 +23,14 @@ async function workers(req, res, next) {
 }
 
 async function createProject(req, res, next) {
-  const folderName = `${req.body.folder}`;
+
   try {
     db.query(
-      `INSERT INTO folder (name, assigned_worker_id) VALUES (?,?)`,
-      [folderName, req.body.idUser],
+      `INSERT INTO projects (name, duration, assigned_user_id) VALUES (?,?,?)`,
+      [req.body.projectName, req.body.projectDuration, req.body.uid],
       (err, result, fields) => {
-        const TableID = result.insertId;
-        if (req.files) {
-          for (const file in req.files) {
-            console.log(`${file} : ${req.files[file].name}`);
-            db.query(
-              "INSERT INTO file (name, bufferData, type,folder_fk) VALUES (?,?,?,?)",
-              [
-                req.files[file].name,
-                req.files[file].data,
-                req.files[file].mimetype,
-                TableID,
-              ]
-            );
-          }
-          return res
-            .status(200)
-            .json({ message: `${Object.keys(req.files).length} files added` });
-        }
-        return res
-          .status(200)
-          .json({ message: `folder '${folderName}' created` });
+        if (err) throw err
+        res.status(200).json({message: "project Created"})
       }
     );
   } catch (err) {

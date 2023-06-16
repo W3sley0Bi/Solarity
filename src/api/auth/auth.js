@@ -7,6 +7,7 @@ const jwt = require('jsonwebtoken');
 
 //put the value of the foreign key dynamic
 async function registration(req, res, next) {
+	console.log(req.body.role)
 	try {
 		 	db.query(`INSERT INTO user (name, password, role_fk) VALUES (
 				'${req.body.username}',
@@ -118,7 +119,6 @@ async function updateToPremium(req, res, next){
    next(err);
 }
 }
-
 
 async function showProfile(req, res, next){
 	try {
