@@ -8,7 +8,7 @@ async function workers(req, res, next) {
       db.query(
         `SELECT role_fk,idUser FROM user`,
         (err, result, fields) => {
-          console.log(result);
+         // console.log(result);
           if (result.length === 0) return res.status(401).json({ message: `No token found` });
           return res.status(200).json(result);
         }
@@ -44,7 +44,7 @@ async function userFolder(req, res, next) {
 
 	db.query(`SELECT idProject, name, assigned_user_id, status, duration, start_date FROM projects WHERE assigned_user_id = '${req.params.Uid}' `, 
 	(err, result, fields) =>{
-		console.log(result[0]);
+		// console.log(result[0]);
 	  if (err) throw err;
 	  res.json(result)
 	})
@@ -56,15 +56,16 @@ async function userFolder(req, res, next) {
 }
 
 async function getProjectContent(req, res, next) {
+//this is the list of the products
 
   try {
-    db.query(`SELECT idProject, name, assigned_user_id, status, duration, start_date FROM projects WHERE assigned_user_id = '${req.params.Uid}' `, 
+    db.query(`SELECT * FROM field_product WHERE project_id = '${req.params.ProjectContent}' `, 
     (err, result, fields) =>{
-      console.log(result[0]);
       if (err) throw err;
-      res.json(result)
+      console.log(result)
+      res.status(200).json({result})
     })
-    
+  
     } catch (err) {
       res.status(400).json({ message: err.message });
       next(err);
