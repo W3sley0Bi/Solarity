@@ -11,7 +11,7 @@ async function registration(req, res, next) {
 		 	db.query(`INSERT INTO user (name, password, role_fk) VALUES (
 				'${req.body.username}',
 				'${hashSync(req.body.password,10)}',
-				'2')`, (err, result, fields) => {
+				'${req.body.role}')`, (err, result, fields) => {
 			  if (err) throw err
 			return res.status(201).json({ message: 'User registered' })});
 
