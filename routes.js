@@ -48,16 +48,17 @@ router.get('/workers', passport.authenticate('jwt', { session: false }), async (
     await user.workers(req,res,next);
 });
 
-router.post('/:Uid/addFolder', passport.authenticate('jwt', { session: false }),async(req, res, next)=>{
-    await user.addFolder(req,res,next);
+router.post('/:Uid/createProject', passport.authenticate('jwt', { session: false }),async(req, res, next)=>{
+    await user.createProject(req,res,next);
 })
 
 router.get('/userFolder/:Uid', passport.authenticate('jwt', { session: false }), async (req,res,next)=>{
     await user.userFolder(req,res,next);
 })
 
-router.get(`/userFolder/:Uid/:FolderContent`, passport.authenticate('jwt', { session: false }),async (req,res,next)=>{
-	await user.getFolderContent(req,res,next);
+//get porject content [FolderContent].js Page
+router.get(`/userFolder/:Uid/:ProjectContent`, passport.authenticate('jwt', { session: false }),async (req,res,next)=>{
+	await user.getProjectContent(req,res,next);
 });
 
 

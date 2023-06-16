@@ -21,7 +21,7 @@ async function workers(req, res, next) {
   }
 }
 
-async function addFolder(req, res, next) {
+async function createProject(req, res, next) {
   const folderName = `${req.body.folder}`;
   try {
     db.query(
@@ -73,29 +73,27 @@ async function userFolder(req, res, next) {
   }
 }
 
-async function getFolderContent(req, res, next) {
+async function getProjectContent(req, res, next) {
 
-db.query(`SELECT f.name as folder_name, f.assigned_worker_id, 
-	fi.idFile, fi.name as file_name, fi.bufferData as file_data, fi.type as file_type, fi.folder_fk
-  FROM folder f
-  LEFT JOIN file fi ON f.idFolder = fi.folder_fk
-  WHERE f.assigned_worker_id = '${req.params.Uid}' AND f.idFolder = '${req.params.FolderContent}'
-  `, 
-   (err, result, fields) =>{
-	if (err) throw err;
-  
-	//check sometimes this line gives you error
-  console.log(result)
-   res.json(result)
-  
-	});
+  try {
+    db.query(`SELECT idProject, name, assigned_user_id, status, duration, start_date FROM projects WHERE assigned_user_id = '${req.params.Uid}' `, 
+    (err, result, fields) =>{
+      console.log(result[0]);
+      if (err) throw err;
+      res.json(result)
+    })
+    
+    } catch (err) {
+      res.status(400).json({ message: err.message });
+      next(err);
+    }
 
 
 }
 
 module.exports = {
   workers,
-  addFolder,
+  createProject,
   userFolder,
-  getFolderContent,
+  getProjectContent,
 };
