@@ -4,7 +4,7 @@ const auth = require('./src/api/auth/auth');
 const user = require('./src/api/user/user');
 const form = require('./src/api/formHandler/fillPDF')
 const passport = require('passport');
-const {deleteProject} = require('./src/api/delete/deleteFunctions')
+const {deleteProject, deleteProduct} = require('./src/api/delete/deleteFunctions')
 
 // passport.authenticate('jwt', { session: false }),
 
@@ -62,26 +62,20 @@ router.get(`/userFolder/:Uid/:ProjectContent`, passport.authenticate('jwt', { se
 });
 
 
-router.post(`/formSign`, passport.authenticate('jwt', { session: false }),async (req,res,next)=>{
-	await form.fillPDF(req,res,next);
+// router.post(`/formSign`, passport.authenticate('jwt', { session: false }),async (req,res,next)=>{
+// 	await form.fillPDF(req,res,next);
     
-});
+// });
 
-router.post(`/deleteFile`, passport.authenticate('jwt', { session: false }),async (req,res,next)=>{
-    await deleteFile(req,res,next);
 
-    
-});
 
 router.post(`/deleteProject`, passport.authenticate('jwt', { session: false }),async (req,res,next)=>{
 	await deleteProject(req,res,next);
     
 });
 
-// router.delete(`/deleteUser`, passport.authenticate('jwt', { session: false }),async (req,res,next)=>{
-// 	await form.DeleteUser(req,res,next);
-    
-// });
+
+
 
 // Company ///////////////////////////////////////
 
@@ -89,8 +83,14 @@ router.get('/companyFolder/:Uid', passport.authenticate('jwt', { session: false 
     await user.companyDash(req,res,next);
 })
 
+router.post('/:Uid/createProduct', passport.authenticate('jwt', { session: false }),async(req, res, next)=>{
+    await user.createProduct(req,res,next);
+})
 
-
+router.post(`/deleteProduct`, passport.authenticate('jwt', { session: false }),async (req,res,next)=>{
+	await deleteProduct(req,res,next);
+    
+});
 
 
 

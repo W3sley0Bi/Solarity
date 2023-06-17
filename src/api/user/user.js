@@ -1,6 +1,8 @@
 const config = require("../../../config");
 const { db } = require("../../modules/DBConnection");
 
+// super user //////////////////////////////////////////
+
 //test user list api for super user
 async function workers(req, res, next) {
   try {
@@ -21,6 +23,9 @@ async function workers(req, res, next) {
     next(err);
   }
 }
+
+// basic //////////////////////////////////////////
+
 
 async function createProject(req, res, next) {
 
@@ -74,6 +79,10 @@ async function getProjectContent(req, res, next) {
 
 }
 
+
+// Company //////////////////////////////////////////
+
+//READ PRODUCT LIST
 async function companyDash(req, res, next){
   try {
 
@@ -90,10 +99,30 @@ async function companyDash(req, res, next){
     }
 }
 
+// CREATE PRODUCT 
+async function createProduct(req, res, next){
+  console.log(req.body)
+  try {
+    db.query(
+      `INSERT INTO company_product (name, peakpower, provider_id, temp_coff, system_loss, area, nominal_temp) VALUES (?,?,?,?,?,?,?)`,
+      [req.body.productName, req.body.productPeakPower, req.body.uid, req.body.tempCoff, req.body.systemLoss, req.body.area, req.body.nomTemp],
+      (err, result, fields) => {
+        if (err) throw err
+        res.status(200).json({message: "Product Created"})
+      }
+    );
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+    next(err);
+  }
+}
+
+
 module.exports = {
   workers,
   createProject,
   userFolder,
   getProjectContent,
   companyDash,
+  createProduct,
 };
