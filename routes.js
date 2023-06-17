@@ -83,7 +83,11 @@ router.post(`/deleteProject`, passport.authenticate('jwt', { session: false }),a
     
 // });
 
+// Company ///////////////////////////////////////
 
+router.get('/companyFolder/:Uid', passport.authenticate('jwt', { session: false }), async (req,res,next)=>{
+    await user.companyDash(req,res,next);
+})
 
 
 

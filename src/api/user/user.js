@@ -74,9 +74,26 @@ async function getProjectContent(req, res, next) {
 
 }
 
+async function companyDash(req, res, next){
+  try {
+
+    db.query(`SELECT * FROM company_product WHERE provider_id = '${req.params.Uid}'`, 
+    (err, result, fields) =>{
+      console.log(result);
+      if (err) throw err;
+      res.status(200).json(result)
+    })
+    
+    } catch (err) {
+      res.status(400).json({ message: err.message });
+      next(err);
+    }
+}
+
 module.exports = {
   workers,
   createProject,
   userFolder,
   getProjectContent,
+  companyDash,
 };
