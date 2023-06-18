@@ -57,7 +57,7 @@ router.get('/userFolder/:Uid', passport.authenticate('jwt', { session: false }),
 })
 
 //get porject content [FolderContent].js Page
-router.get(`/userFolder/:Uid/:ProjectContent`, passport.authenticate('jwt', { session: false }),async (req,res,next)=>{
+router.get(`/userFolder/:Uid/:Content`, passport.authenticate('jwt', { session: false }),async (req,res,next)=>{
 	await user.getProjectContent(req,res,next);
 });
 

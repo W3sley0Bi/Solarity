@@ -62,9 +62,8 @@ async function userFolder(req, res, next) {
 
 async function getProjectContent(req, res, next) {
 //this is the list of the products
-
   try {
-    db.query(`SELECT * FROM field_product WHERE project_id = '${req.params.ProjectContent}' `, 
+    db.query(`SELECT * FROM field_product WHERE project_id = '${req.params.Content}' `, 
     (err, result, fields) =>{
       if (err) throw err;
       console.log(result)
