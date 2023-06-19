@@ -175,10 +175,5 @@ module.exports = {
   getProjectContent,
   companyDash,
   createProduct,
-<<<<<<< HEAD
   getAllProducts
-=======
-  updatedProject,
-  deleteProjectContentElement,
->>>>>>> 1723179d1a8d69e767ef9acf0bd25415bcf1cee4
 };
