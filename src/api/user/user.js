@@ -98,6 +98,23 @@ async function companyDash(req, res, next){
     }
 }
 
+//READ ALL PRODUCTS
+async function getAllProducts(req, res, next){
+  try {
+
+    db.query(`SELECT name, product_id FROM company_product`, 
+    (err, result, fields) =>{
+      console.log(result);
+      if (err) throw err;
+      res.status(200).json(result)
+    })
+    
+    } catch (err) {
+      res.status(400).json({ message: err.message });
+      next(err);
+    }
+}
+
 // CREATE PRODUCT 
 async function createProduct(req, res, next){
   console.log(req.body)
@@ -124,4 +141,5 @@ module.exports = {
   getProjectContent,
   companyDash,
   createProduct,
+  getAllProducts
 };

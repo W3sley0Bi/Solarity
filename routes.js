@@ -74,6 +74,10 @@ router.post(`/deleteProject`, passport.authenticate('jwt', { session: false }),a
     
 });
 
+router.get('/getAllProducts', passport.authenticate('jwt', { session: false }), async (req,res,next) =>{    
+    await user.getAllProducts(req,res,next);
+});
+
 
 
 
