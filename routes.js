@@ -61,7 +61,13 @@ router.get(`/userFolder/:Uid/:Content`, passport.authenticate('jwt', { session: 
 	await user.getProjectContent(req,res,next);
 });
 
+router.post('/:Uid/updateProject', passport.authenticate('jwt', { session: false }),async(req, res, next)=>{
+    await user.updateProject(req,res,next);
+})
 
+router.post(`/deleteProjectContentElement`, passport.authenticate('jwt', { session: false }),async (req,res,next)=>{
+	await user.deleteProjectContentElement(req,res,next);
+});
 // router.post(`/formSign`, passport.authenticate('jwt', { session: false }),async (req,res,next)=>{
 // 	await form.fillPDF(req,res,next);
     

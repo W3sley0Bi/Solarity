@@ -78,6 +78,40 @@ async function getProjectContent(req, res, next) {
 
 }
 
+async function updatedProject(req, res, next) {
+
+  try {
+      db.query(
+      `UPDATE projects SET name='${req.body.projectName}' duration='${req.body.projectDuration}'`,
+      (err, result, fields) => {
+        if (err) throw err
+        res.status(200).json({message: "project Updated"})
+      }
+    );
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+    next(err);
+  }
+}
+
+// TO DO 
+// async function addProjectContentElement(req, res, next){
+
+// }
+
+async function deleteProjectContentElement(req, res, next){
+
+db.query(`DELETE FROM field_product WHERE project_id='${req.body.project_id}' AND field_product_id='${req.body.field_product_id}'`,
+(err, result, fields) => {
+    if (err) throw err
+    
+})
+
+res.json({ status: 200, message: "Prrodotto removed from the project"})
+
+
+
+}
 
 // Company //////////////////////////////////////////
 
@@ -124,4 +158,6 @@ module.exports = {
   getProjectContent,
   companyDash,
   createProduct,
+  updatedProject,
+  deleteProjectContentElement,
 };

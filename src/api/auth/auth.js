@@ -95,7 +95,7 @@ async function deleteProfile(req, res, next){
 
 async function updateProfile(req, res, next){
 	try {
-		db.query(`UPDATE user SET name='${req.body.username}', password='${hashSync(req.body.password,10)}'  WHERE idUser='${req.body.idUser}'`, 
+		db.query(`UPDATE user SET name='${req.body.username}', password='${hashSync(req.body.password,10)}'  WHERE idUser='${req.body.uid}'`, 
 		(err, result, fields) => {
 		 if (err) throw err
 	   return res.status(201).json({ message: 'Profile data updated' })});
@@ -109,7 +109,7 @@ async function updateProfile(req, res, next){
 //did tested yet
 async function updateToPremium(req, res, next){
 	try {
-		db.query(`UPDATE user SET role_fk='3' WHERE idUser='${req.body.idUser}'`, 
+		db.query(`UPDATE user SET role_fk='3' WHERE idUser='${req.body.uid}'`, 
 		(err, result, fields) => {
 		 if (err) throw err
 	   return res.status(201).json({ message: 'Premium Account Activated' })});
@@ -123,6 +123,7 @@ async function updateToPremium(req, res, next){
 async function showProfile(req, res, next){
 	try {
 		db.query(`SELECT * FROM user WHERE idUser='${req.body.Uid}' `, (err, result, fields) =>{
+			if (err) throw err
 			return res.status(201).json({result});
 		})
 	}catch(err) {
