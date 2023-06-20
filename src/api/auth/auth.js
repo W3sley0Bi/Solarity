@@ -9,9 +9,10 @@ const jwt = require('jsonwebtoken');
 async function registration(req, res, next) {
 	console.log(req.body.role)
 	try {
-		 	db.query(`INSERT INTO user (name, password, role_fk) VALUES (
+		 	db.query(`INSERT INTO user (name, password, email, role_fk) VALUES (
 				'${req.body.username}',
 				'${hashSync(req.body.password,10)}',
+				'${req.body.email}',
 				'${req.body.role}')`, (err, result, fields) => {
 			  if (err) throw err
 			return res.status(201).json({ message: 'User registered' })});
