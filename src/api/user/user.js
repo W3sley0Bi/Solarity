@@ -185,6 +185,23 @@ async function addProduct(req, res, next){
   }
 }
 
+// UPDATE PRODUCT
+async function updatedProduct(req, res, next) {
+
+  try {
+      db.query(
+      `UPDATE field_product SET lon=${req.body.lon}, lat=${req.body.lat}, tilt=${req.body.tilt}, utc_offset=${req.body.utc_offset}, orientation='${req.body.orientation}', company_product_id=${req.body.company_product_id} WHERE field_product_id = ${req.body.field_product_id} AND project_id=${req.params.Content}`,
+      (err, result, fields) => {
+        if (err) throw err
+        res.status(200).json({message: "Product Updated"})
+      }
+    );
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+    next(err);
+  }
+}
+
 
 
 module.exports = {
@@ -195,5 +212,6 @@ module.exports = {
   companyDash,
   createProduct,
   getAllProducts,
-  addProduct
+  addProduct,
+  updatedProduct
 };
