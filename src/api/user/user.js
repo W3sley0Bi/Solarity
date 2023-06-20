@@ -167,6 +167,25 @@ async function createProduct(req, res, next){
   }
 }
 
+// ADD PRODUCT TO PROJECT
+async function addProduct(req, res, next){
+  console.log(req.body)
+  try {
+    db.query(
+      `INSERT INTO field_product (project_id, lon, lat, utc_offset, tilt, orientation, company_product_id) VALUES (?,?,?,?,?,?,?)`,
+      [req.params.Content, req.body.lon, req.body.lat, req.body.utc_offset, req.body.tilt, req.body.orientation, req.body.company_product_id],
+      (err, result, fields) => {
+        if (err) throw err
+        res.status(200).json({message: "Product Added"})
+      }
+    );
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+    next(err);
+  }
+}
+
+
 
 module.exports = {
   workers,
@@ -175,5 +194,6 @@ module.exports = {
   getProjectContent,
   companyDash,
   createProduct,
-  getAllProducts
+  getAllProducts,
+  addProduct
 };
