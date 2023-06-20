@@ -214,5 +214,4 @@ module.exports = {
   updatedProject,
   userDateForUpdate,
   addProduct,
-  updatedProduct
 };
