@@ -44,10 +44,11 @@ async function createProject(req, res, next) {
   }
 }
 
+//get project data
 async function userFolder(req, res, next) {
   try {
 
-	db.query(`SELECT idProject, name, assigned_user_id, status, duration, start_date FROM projects WHERE assigned_user_id = '${req.params.Uid}' `, 
+	db.query(`SELECT * FROM projects WHERE assigned_user_id = '${req.params.Uid}' `, 
 	(err, result, fields) =>{
 		// console.log(result[0]);
 	  if (err) throw err;
@@ -60,9 +61,24 @@ async function userFolder(req, res, next) {
   }
 }
 
+async function userDateForUpdate(req, res, next) {
+  try {
+	db.query(`SELECT * FROM projects WHERE assigned_user_id = '${req.params.Uid}' AND idProject = '${req.params.Content}' `, 
+	(err, result, fields) =>{
+	  if (err) throw err;
+	  res.json(result[0])
+	})
+	
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+    next(err);
+  }
+}
+
 async function getProjectContent(req, res, next) {
 //this is the list of the products
   try {
+    console.log(req.params)
     db.query(`SELECT * FROM field_product WHERE project_id = '${req.params.Content}' `, 
     (err, result, fields) =>{
       if (err) throw err;
@@ -79,10 +95,10 @@ async function getProjectContent(req, res, next) {
 }
 
 async function updatedProject(req, res, next) {
-
+console.log(req.body.idProject)
   try {
       db.query(
-      `UPDATE projects SET name='${req.body.projectName}' duration='${req.body.projectDuration}'`,
+      `UPDATE projects SET name='${req.body.projectName}', duration='${req.body.projectDuration}' WHERE idProject = '${req.body.idProject}' `,
       (err, result, fields) => {
         if (err) throw err
         res.status(200).json({message: "project Updated"})
@@ -93,11 +109,6 @@ async function updatedProject(req, res, next) {
     next(err);
   }
 }
-
-// TO DO 
-// async function addProjectContentElement(req, res, next){
-
-// }
 
 async function deleteProjectContentElement(req, res, next){
 
@@ -112,6 +123,25 @@ res.json({ status: 200, message: "Prrodotto removed from the project"})
 
 
 }
+
+// ADD PRODUCT TO PROJECT
+async function addProduct(req, res, next){
+  console.log(req.body)
+  try {
+    db.query(
+      `INSERT INTO field_product (project_id, lon, lat, utc_offset, tilt, orientation, company_product_id) VALUES (?,?,?,?,?,?,?)`,
+      [req.params.Content, req.body.lon, req.body.lat, req.body.utc_offset, req.body.tilt, req.body.orientation, req.body.company_product_id],
+      (err, result, fields) => {
+        if (err) throw err
+        res.status(200).json({message: "Product Added"})
+      }
+    );
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+    next(err);
+  }
+}
+
 
 // Company //////////////////////////////////////////
 
@@ -167,24 +197,8 @@ async function createProduct(req, res, next){
   }
 }
 
-// ADD PRODUCT TO PROJECT
-async function addProduct(req, res, next){
-  console.log(req.body)
-  try {
-    db.query(
-      `INSERT INTO field_product (project_id, lon, lat, utc_offset, tilt, orientation, company_product_id) VALUES (?,?,?,?,?,?,?)`,
-      [req.params.Content, req.body.lon, req.body.lat, req.body.utc_offset, req.body.tilt, req.body.orientation, req.body.company_product_id],
-      (err, result, fields) => {
-        if (err) throw err
-        res.status(200).json({message: "Product Added"})
-      }
-    );
-  } catch (err) {
-    res.status(400).json({ message: err.message });
-    next(err);
-  }
-}
-
+// TO DO 
+// UPDATE PRODUCT
 
 
 module.exports = {
@@ -195,5 +209,8 @@ module.exports = {
   companyDash,
   createProduct,
   getAllProducts,
-  addProduct
+  addProduct,
+  deleteProjectContentElement,
+  updatedProject,
+  userDateForUpdate,
 };

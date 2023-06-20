@@ -56,6 +56,10 @@ router.get('/userFolder/:Uid', passport.authenticate('jwt', { session: false }),
     await user.userFolder(req,res,next);
 })
 
+router.get('/userFolder/update/:Uid/:Content', passport.authenticate('jwt', { session: false }), async (req,res,next)=>{
+    await user.userDateForUpdate(req,res,next);
+})
+
 //get porject content [FolderContent].js Page
 router.get(`/userFolder/:Uid/:Content`, passport.authenticate('jwt', { session: false }),async (req,res,next)=>{
 	await user.getProjectContent(req,res,next);
@@ -66,7 +70,7 @@ router.post(`/userFolder/:Uid/:Content/addProduct`, passport.authenticate('jwt',
 });
 
 router.post('/:Uid/updateProject', passport.authenticate('jwt', { session: false }),async(req, res, next)=>{
-    await user.updateProject(req,res,next);
+    await user.updatedProject(req,res,next);
 })
 
 router.post(`/deleteProjectContentElement`, passport.authenticate('jwt', { session: false }),async (req,res,next)=>{
