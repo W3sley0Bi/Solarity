@@ -95,8 +95,9 @@ async function deleteProfile(req, res, next){
 }
 
 async function updateProfile(req, res, next){
+	
 	try {
-		db.query(`UPDATE user SET name='${req.body.username}', password='${hashSync(req.body.password,10)}'  WHERE idUser='${req.body.uid}'`, 
+		db.query(`UPDATE user SET name='${req.body.username}', password='${hashSync(req.body.password,10)}', email='${req.body.email}'  WHERE idUser='${req.body.uid}'`, 
 		(err, result, fields) => {
 		 if (err) throw err
 	   return res.status(201).json({ message: 'Profile data updated' })});
