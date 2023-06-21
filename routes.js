@@ -69,6 +69,10 @@ router.post(`/userFolder/:Uid/:Content/addProduct`, passport.authenticate('jwt',
 	await user.addProduct(req,res,next);
 });
 
+router.post(`/userFolder/:Uid/:Content/updateProduct`, passport.authenticate('jwt', { session: false }),async (req,res,next)=>{
+	await user.updatedProduct(req,res,next);
+});
+
 router.post('/:Uid/updateProject', passport.authenticate('jwt', { session: false }),async(req, res, next)=>{
     await user.updatedProject(req,res,next);
 })
