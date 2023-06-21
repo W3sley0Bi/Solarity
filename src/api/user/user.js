@@ -60,6 +60,20 @@ async function userFolder(req, res, next) {
   }
 }
 
+async function userDateForUpdate(req, res, next) {
+  try {
+	db.query(`SELECT * FROM projects WHERE assigned_user_id = '${req.params.Uid}' AND idProject = '${req.params.Content}' `, 
+	(err, result, fields) =>{
+	  if (err) throw err;
+	  res.json(result[0])
+	})
+	
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+    next(err);
+  }
+}
+
 async function getProjectContent(req, res, next) {
 //this is the list of the products
   try {
@@ -79,19 +93,18 @@ async function getProjectContent(req, res, next) {
 }
 
 async function updatedProject(req, res, next) {
-
   try {
-      db.query(
-      `UPDATE projects SET name='${req.body.projectName}' duration='${req.body.projectDuration}'`,
-      (err, result, fields) => {
-        if (err) throw err
-        res.status(200).json({message: "project Updated"})
-      }
-    );
-  } catch (err) {
-    res.status(400).json({ message: err.message });
-    next(err);
-  }
+    db.query(
+    `UPDATE projects SET name='${req.body.projectName}', duration='${req.body.projectDuration}' WHERE idProject = '${req.body.idProject}' `,
+    (err, result, fields) => {
+      if (err) throw err
+      res.status(200).json({message: "project Updated"})
+    }
+  );
+} catch (err) {
+  res.status(400).json({ message: err.message });
+  next(err);
+}
 }
 
 // TO DO 
@@ -215,5 +228,8 @@ module.exports = {
   createProduct,
   getAllProducts,
   addProduct,
-  updatedProduct
+  updatedProduct,
+  deleteProjectContentElement,
+  updatedProject,
+  userDateForUpdate,
 };
