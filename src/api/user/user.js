@@ -176,7 +176,7 @@ async function addProduct(req, res, next){
       [req.params.Content, req.body.lon, req.body.lat, req.body.utc_offset, req.body.tilt, req.body.orientation, req.body.company_product_id],
       (err, result, fields) => {
         if (err) throw err
-        res.status(200).json({message: "Product Added"})
+        res.status(200).json({message: ("Product Added,".concat(result.insertId.toString()))})
       }
     );
   } catch (err) {
