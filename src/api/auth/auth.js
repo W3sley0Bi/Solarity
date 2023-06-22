@@ -32,8 +32,6 @@ async function login(req, res, next) {
   	//incorrect password
  	if(!compareSync(req.body.password, result[0].password)) return res.sendStatus(401)
 
-
-
 //initializing the paylod for the jwt signature
   const payload = {
     Uid: result[0].idUser,
@@ -80,8 +78,21 @@ async function login(req, res, next) {
 	}
 }
 
+async function showSoftDeleteAccounts(req, res, next) {
+	try {
+		db.query(`SELECT * FROM user WHERE status='1'`, (err, result, fields) =>{
+  	if (err) throw err;
+
+	res.json({staus: 200, results: result})
+})
+	}catch(err){
+		res.status(400).json({ message: err.message });
+		next(err);
+	}
+}
+
 async function deleteProfile(req, res, next){
-	console.log(req.body.Uid)
+
 	try {
 		db.query(`UPDATE user SET status='1' WHERE idUser='${req.body.Uid}'`, 
 		(err, result, fields) => {
@@ -168,5 +179,6 @@ module.exports = {
 	updateToPremium,
 	updateUsername,
 	updateEmail,
-	updatePassword
+	updatePassword,
+	showSoftDeleteAccounts
 };

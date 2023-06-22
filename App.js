@@ -4,7 +4,8 @@ const cfg = require('./config.js')
 const upload = require('express-fileupload')
 const bodyParser = require('body-parser');
 const router = require('./routes')
-
+const swaggerUI = require('swagger-ui-express')
+const swaggerJsDocs = require('swagger-jsdoc')
 const cors = require("cors");
 
 const passport = require('passport');
@@ -27,6 +28,27 @@ app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 app.use(upload());
 app.use(passport.initialize());
 app.use("/", router);
+
+
+const options = {
+  definition:{
+    openapi:"3.0.0",
+    info: {
+      title: "Library API",
+      version: "1.0.0",
+      description: "Solarity API Library"
+    },
+    servers: [{
+      url:"http://localhost:3001"
+    }],
+  },
+  apis:["routes.js"]
+}
+
+const specs = swaggerJsDocs(options)
+
+//http://localhost:3001/api-docs/
+app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(specs))
 
 
 app.use((err, req, res, next) => {
