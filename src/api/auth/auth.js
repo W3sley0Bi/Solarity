@@ -26,7 +26,7 @@ async function registration(req, res, next) {
 
 async function login(req, res, next) {
 	try {
-		db.query(`SELECT * FROM user WHERE name='${req.body.username}' `, (err, result, fields) =>{
+		db.query(`SELECT * FROM user WHERE name='${req.body.username}' AND status='0'`, (err, result, fields) =>{
   	if (err) throw err;
   	if(result.length == 0) return res.sendStatus(401)
   	//incorrect password
@@ -83,7 +83,7 @@ async function login(req, res, next) {
 async function deleteProfile(req, res, next){
 	console.log(req.body.Uid)
 	try {
-		db.query(`DELETE FROM user WHERE idUser='${req.body.Uid}'`, 
+		db.query(`UPDATE user SET status='1' WHERE idUser='${req.body.Uid}'`, 
 		(err, result, fields) => {
 		 if (err) throw err
 	   return res.status(201).json({ message: 'User Deleted' })});
