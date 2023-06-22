@@ -44,10 +44,10 @@ async function createProject(req, res, next) {
   }
 }
 
-async function userFolder(req, res, next) {
+async function opendUserFolder(req, res, next) {
   try {
 
-	db.query(`SELECT idProject, name, assigned_user_id, status, duration, start_date FROM projects WHERE assigned_user_id = '${req.params.Uid}' `, 
+	db.query(`SELECT * FROM projects WHERE assigned_user_id = '${req.params.Uid}' AND status='0' `, 
 	(err, result, fields) =>{
 		// console.log(result[0]);
 	  if (err) throw err;
@@ -59,6 +59,37 @@ async function userFolder(req, res, next) {
     next(err);
   }
 }
+async function closedUserFolder(req, res, next) {
+  try {
+
+	db.query(`SELECT * FROM projects WHERE assigned_user_id = '${req.params.Uid}' AND status='1' `, 
+	(err, result, fields) =>{
+		// console.log(result[0]);
+	  if (err) throw err;
+	  res.json(result)
+	})
+	
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+    next(err);
+  }
+}
+async function userFolder(req, res, next) {
+  try {
+
+	db.query(`SELECT * FROM projects WHERE assigned_user_id = '${req.params.Uid}'`, 
+	(err, result, fields) =>{
+		// console.log(result[0]);
+	  if (err) throw err;
+	  res.json(result)
+	})
+	
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+    next(err);
+  }
+}
+
 
 async function userDateForUpdate(req, res, next) {
   try {
@@ -232,4 +263,6 @@ module.exports = {
   deleteProjectContentElement,
   updatedProject,
   userDateForUpdate,
+  closedUserFolder,
+  opendUserFolder
 };

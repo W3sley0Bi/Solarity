@@ -26,8 +26,14 @@ router.post('/deleteProfile', passport.authenticate('jwt', { session: false }), 
     await auth.deleteProfile(req,res,next);
 });
 
-router.post('/updateProfile', passport.authenticate('jwt', { session: false }), async (req,res,next) =>{    
-    await auth.updateProfile(req,res,next);
+router.post('/updateUsername', passport.authenticate('jwt', { session: false }), async (req,res,next) =>{    
+    await auth.updateUsername(req,res,next);
+});
+router.post('/updateEmail', passport.authenticate('jwt', { session: false }), async (req,res,next) =>{    
+    await auth.updateEmail(req,res,next);
+});
+router.post('/updatePassword', passport.authenticate('jwt', { session: false }), async (req,res,next) =>{    
+    await auth.updatePassword(req,res,next);
 });
 
 router.post('/showProfile', passport.authenticate('jwt', { session: false }), async (req,res,next) =>{    
@@ -55,6 +61,15 @@ router.post('/:Uid/createProject', passport.authenticate('jwt', { session: false
 router.get('/userFolder/:Uid', passport.authenticate('jwt', { session: false }), async (req,res,next)=>{
     await user.userFolder(req,res,next);
 })
+
+router.get('/openUserFolder/:Uid', passport.authenticate('jwt', { session: false }), async (req,res,next)=>{
+    await user.opendUserFolder(req,res,next);
+})
+
+router.get('/closedUserFolder/:Uid', passport.authenticate('jwt', { session: false }), async (req,res,next)=>{
+    await user.closedUserFolder(req,res,next);
+})
+
 
 router.get('/userFolder/update/:Uid/:Content', passport.authenticate('jwt', { session: false }), async (req,res,next)=>{
     await user.userDateForUpdate(req,res,next);

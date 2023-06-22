@@ -94,13 +94,39 @@ async function deleteProfile(req, res, next){
 }
 }
 
-async function updateProfile(req, res, next){
-	
+//Update profile data
+async function updateUsername(req, res, next){
 	try {
-		db.query(`UPDATE user SET name='${req.body.username}', password='${hashSync(req.body.password,10)}', email='${req.body.email}'  WHERE idUser='${req.body.uid}'`, 
+		db.query(`UPDATE user SET name='${req.body.data}' WHERE idUser='${req.body.uid}'`, 
 		(err, result, fields) => {
 		 if (err) throw err
-	   return res.status(201).json({ message: 'Profile data updated' })});
+	   return res.status(201).json({ message: 'Username updated' })});
+
+} catch (err) {
+   res.status(400).json({ message: err.message });
+   next(err);
+}
+}
+async function updateEmail(req, res, next){
+	
+	try {
+		db.query(`UPDATE user SET email='${req.body.data}'  WHERE idUser='${req.body.uid}'`, 
+		(err, result, fields) => {
+		 if (err) throw err
+	   return res.status(201).json({ message: 'Email updated' })});
+
+} catch (err) {
+   res.status(400).json({ message: err.message });
+   next(err);
+}
+}
+async function updatePassword(req, res, next){
+	
+	try {
+		db.query(`UPDATE user SET password='${hashSync(req.body.data,10)}' WHERE idUser='${req.body.uid}'`, 
+		(err, result, fields) => {
+		 if (err) throw err
+	   return res.status(201).json({ message: 'Password updated' })});
 
 } catch (err) {
    res.status(400).json({ message: err.message });
@@ -138,7 +164,9 @@ module.exports = {
 	registration,
 	login,
 	deleteProfile,
-	updateProfile,
 	showProfile,
-	updateToPremium
+	updateToPremium,
+	updateUsername,
+	updateEmail,
+	updatePassword
 };
