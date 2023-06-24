@@ -10,6 +10,7 @@ const config = {
       port: process.env.DB_PORT,
       // connectionLimit: process.env.CONN_LIMIT,
     },
+    pythonServer: process.env.PYTHON_SERVER,
     port: process.env.PORT ? process.env.PORT : 3001,
     jwt: process.env.SECRETJWT ? process.env.SECRETJWT : "forzaNapoli",
     listPerPage: 10,

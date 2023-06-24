@@ -145,6 +145,7 @@ const user = require('./src/api/user/user');
 const form = require('./src/api/formHandler/fillPDF')
 const passport = require('passport');
 const {deleteProject, deleteProduct} = require('./src/api/delete/deleteFunctions')
+const pythonBack = require('./src/api/pythonBackend/pythonBackendCalc')
 
 /**
  * @swagger
@@ -1107,6 +1108,81 @@ router.post('/:Uid/createProduct', passport.authenticate('jwt', { session: false
 router.post(`/deleteProduct`, passport.authenticate('jwt', { session: false }),async (req,res,next)=>{
 	await deleteProduct(req,res,next);
 });
+
+
+
+
+
+// PYTHON BACKEND API
+
+/**
+ * @swagger
+ * tags:
+ *   name: PythonBackend
+ *   description: Calls to a remote python server 4 calculations
+ */
+
+
+/**
+ * @swagger
+ * /getUTC:
+ *   get:
+ *     summary: Create a product
+ *     tags: [PythonBackend]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: query
+ *         name: lat
+ *         schema:
+ *         required: true
+ *         description: latitude
+ *       - in: query
+ *         name: lng
+ *         schema:
+ *         required: true
+ *         description: longitude
+ *     responses:
+ *       200:
+ *         description: utc retrived
+ *       401:
+ *         description: Unauthorized request
+ *       500:
+ *         description: Internal server error
+ */
+router.get(`/getUTC`, passport.authenticate('jwt', { session: false }), async (req,res,next)=>{
+	await pythonBack.getUTC(req,res,next);
+});
+
+
+/**
+ * @swagger
+ * /locationsearch:
+ *   get:
+ *     summary: Create a product
+ *     tags: [PythonBackend]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: query
+ *         name: location
+ *         schema: 
+ *         required: true
+ *         description: location
+ *     responses:
+ *       200:
+ *         description: Product created successfully
+ *       401:
+ *         description: Unauthorized request
+ *       500:
+ *         description: Internal server error
+ */
+router.get(`/locationsearch`,passport.authenticate('jwt', { session: false }), async (req,res,next)=>{
+	await pythonBack.locationsearch(req,res,next);
+});
+
+
+
 
 module.exports = router;
 
