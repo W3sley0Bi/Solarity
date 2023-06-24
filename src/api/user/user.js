@@ -249,7 +249,6 @@ async function updatedProduct(req, res, next) {
 }
 
 
-
 module.exports = {
   workers,
   createProject,

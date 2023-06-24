@@ -159,7 +159,7 @@ const {deleteProject, deleteProduct} = require('./src/api/delete/deleteFunctions
  *         - role
  *       example:
  *         username: Michael
- *         password: 12se3ed
+ *         password: 12345
  *         email: MichaelJordan@nba.com
  *         role: 2
  * 
@@ -205,7 +205,7 @@ router.post('/registration', async (req,res,next) =>{
  *         - password
  *       example:
  *         username: Michael
- *         password: 12se3ed
+ *         password: "12345"
  */
 
 
@@ -402,7 +402,7 @@ router.post('/updateEmail', passport.authenticate('jwt', { session: false }), as
  *           type: int
  *           description: User ID
  *         data:
- *           type: int
+ *           type: string
  *           description: User data to modify
  *       example:
  *         uid: 15
@@ -544,34 +544,26 @@ router.get('/showSoftDeleteAccounts', async (req,res,next) =>{
     await auth.showSoftDeleteAccounts(req,res,next);
 });
 
-// I'm here
-
-/**
- * @swagger
- * tags:
- *   name: Users
- *   description: API endpoints for user management
- */
-
-/**
- * @swagger
- * /workers:
- *   get:
- *     summary: Get workers
- *     tags: [Users]
- *     security:
- *       - bearerAuth: []
- *     responses:
- *       200:
- *         description: Successfully retrieved workers
- *       401:
- *         description: Unauthorized request
- *       500:
- *         description: Internal server error
- */
 router.get('/workers', passport.authenticate('jwt', { session: false }), async (req,res,next) =>{    
     await user.workers(req,res,next);
 });
+
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     createProject:
+ *       type: object
+ *       required:
+ *         - projectName
+ *         - projectDuration
+ *         - uid
+ *       example:
+ *         uid: 15
+ *         projectName: Titan
+ *         projectDuration: 30
+ *         
+ */
 
 /**
  * @swagger
@@ -581,19 +573,12 @@ router.get('/workers', passport.authenticate('jwt', { session: false }), async (
  *     tags: [Users]
  *     security:
  *       - bearerAuth: []
- *     parameters:
- *       - in: path
- *         name: Uid
- *         schema:
- *           type: string
- *         required: true
- *         description: The user id
  *     requestBody:
  *       required: true
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/Project'
+ *             $ref: '#/components/schemas/createProject'
  *     responses:
  *       200:
  *         description: Project created successfully
@@ -606,12 +591,6 @@ router.post('/:Uid/createProject', passport.authenticate('jwt', { session: false
     await user.createProject(req,res,next);
 });
 
-/**
- * @swagger
- * tags:
- *   name: User
- *   description: User management
- */
 
 /**
  * @swagger
@@ -627,7 +606,7 @@ router.post('/:Uid/createProject', passport.authenticate('jwt', { session: false
  *         required: true
  *         description: User ID
  *         schema:
- *           type: string
+ *           $ref: '#/components/schemas/uid'
  *     responses:
  *       200:
  *         description: User folder retrieved successfully
@@ -654,7 +633,7 @@ router.get('/userFolder/:Uid', passport.authenticate('jwt', { session: false }),
  *         required: true
  *         description: User ID
  *         schema:
- *           type: string
+ *           $ref: '#/components/schemas/uid'
  *     responses:
  *       200:
  *         description: User folder opened successfully
@@ -681,7 +660,7 @@ router.get('/openUserFolder/:Uid', passport.authenticate('jwt', { session: false
  *         required: true
  *         description: User ID
  *         schema:
- *           type: string
+ *           $ref: '#/components/schemas/uid'
  *     responses:
  *       200:
  *         description: User folder closed successfully
@@ -693,6 +672,8 @@ router.get('/openUserFolder/:Uid', passport.authenticate('jwt', { session: false
 router.get('/closedUserFolder/:Uid', passport.authenticate('jwt', { session: false }), async (req,res,next)=>{
     await user.closedUserFolder(req,res,next);
 });
+
+
 
 /**
  * @swagger
@@ -761,6 +742,30 @@ router.get(`/userFolder/:Uid/:Content`, passport.authenticate('jwt', { session: 
 	await user.getProjectContent(req,res,next);
 });
 
+
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     UserProduct:
+ *       type: object
+ *       required:
+ *         - lon
+ *         - lat
+ *         - utc_offset
+ *         - tilt
+ *         - orientation
+ *         - company_product_id
+ *       example:
+ *         lon: 36.404
+ *         lat: 33.204
+ *         utc_offset: 3
+ *         tilt: 45
+ *         orientation: W
+ *         company_product_id: 1
+ *         
+ */
+
 /**
  * @swagger
  * /userFolder/{Uid}/{Content}/addProduct:
@@ -771,15 +776,8 @@ router.get(`/userFolder/:Uid/:Content`, passport.authenticate('jwt', { session: 
  *       - bearerAuth: []
  *     parameters:
  *       - in: path
- *         name: Uid
- *         schema:
- *           type: string
- *         required: true
- *         description: The user id
- *       - in: path
  *         name: Content
  *         schema:
- *           type: string
  *         required: true
  *         description: The project content
  *     requestBody:
@@ -787,7 +785,7 @@ router.get(`/userFolder/:Uid/:Content`, passport.authenticate('jwt', { session: 
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/Product'
+ *             $ref: '#/components/schemas/UserProduct'
  *     responses:
  *       200:
  *         description: Product added successfully
@@ -802,6 +800,31 @@ router.post(`/userFolder/:Uid/:Content/addProduct`, passport.authenticate('jwt',
 
 /**
  * @swagger
+ * components:
+ *   schemas:
+ *     UpdateUserProduct:
+ *       type: object
+ *       required:
+ *         - lon
+ *         - lat
+ *         - utc_offset
+ *         - tilt
+ *         - orientation
+ *         - company_product_id
+ *         - field_product_id
+ *       example:
+ *         lon: 36.404
+ *         lat: 33.204
+ *         utc_offset: 3
+ *         tilt: 45
+ *         orientation: E
+ *         company_product_id: 1
+ *         field_product_id: 50
+ *         
+ */
+
+/**
+ * @swagger
  * /userFolder/{Uid}/{Content}/updateProduct:
  *   post:
  *     summary: Update a product in project content
@@ -810,15 +833,8 @@ router.post(`/userFolder/:Uid/:Content/addProduct`, passport.authenticate('jwt',
  *       - bearerAuth: []
  *     parameters:
  *       - in: path
- *         name: Uid
- *         schema:
- *           type: string
- *         required: true
- *         description: The user id
- *       - in: path
  *         name: Content
  *         schema:
- *           type: string
  *         required: true
  *         description: The project content
  *     requestBody:
@@ -826,7 +842,7 @@ router.post(`/userFolder/:Uid/:Content/addProduct`, passport.authenticate('jwt',
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/Product'
+ *             $ref: '#/components/schemas/UpdateUserProduct'
  *     responses:
  *       200:
  *         description: Product updated successfully
@@ -841,25 +857,36 @@ router.post(`/userFolder/:Uid/:Content/updateProduct`, passport.authenticate('jw
 
 /**
  * @swagger
+ * components:
+ *   schemas:
+ *     updateProject:
+ *       type: object
+ *       required:
+ *         - projectName
+ *         - projectDuration
+ *         - idProject
+ *       example:
+ *         idProject: 33
+ *         projectName: Titan
+ *         projectDuration: 30
+ *         
+ */
+
+
+/**
+ * @swagger
  * /:Uid/updateProject:
  *   post:
  *     summary: Update a project
  *     tags: [Users]
  *     security:
  *       - bearerAuth: []
- *     parameters:
- *       - in: path
- *         name: Uid
- *         schema:
- *           type: string
- *         required: true
- *         description: The user id
  *     requestBody:
  *       required: true
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/Project'
+ *             $ref: '#/components/schemas/updateProject'
  *     responses:
  *       200:
  *         description: Project updated successfully
@@ -871,6 +898,21 @@ router.post(`/userFolder/:Uid/:Content/updateProduct`, passport.authenticate('jw
 router.post(`/:Uid/updateProject`, passport.authenticate('jwt', { session: false }),async(req, res, next)=>{
     await user.updatedProject(req,res,next);
 });
+
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     deleteProjectContentElement:
+ *       type: object
+ *       required:
+ *         - field_product_id
+ *         - project_id
+ *       example:
+ *         field_product_id: 50
+ *         project_id: 33
+ *         
+ */
 
 
 /**
@@ -886,7 +928,7 @@ router.post(`/:Uid/updateProject`, passport.authenticate('jwt', { session: false
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/DeleteProjectContentElement'
+ *             $ref: '#/components/schemas/deleteProjectContentElement'
  *     responses:
  *       200:
  *         description: Project content element deleted successfully
@@ -901,6 +943,23 @@ router.post(`/deleteProjectContentElement`, passport.authenticate('jwt', { sessi
 
 /**
  * @swagger
+ * components:
+ *   schemas:
+ *     DeleteProjectOrProduct:
+ *       type: object
+ *       required:
+ *         - id
+ *       properties:
+ *         id:
+ *           type: int
+ *           description: project ID
+ *       example:
+ *         id: 33
+ *         
+ */
+
+/**
+ * @swagger
  * /deleteProject:
  *   post:
  *     summary: Delete a project
@@ -912,7 +971,7 @@ router.post(`/deleteProjectContentElement`, passport.authenticate('jwt', { sessi
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/DeleteProject'
+ *             $ref: '#/components/schemas/DeleteProjectOrProduct'
  *     responses:
  *       200:
  *         description: Project deleted successfully
@@ -974,25 +1033,43 @@ router.get('/companyFolder/:Uid', passport.authenticate('jwt', { session: false 
 
 /**
  * @swagger
+ * components:
+ *   schemas:
+ *     createProduct:
+ *       type: object
+ *       required:
+ *         - projectName
+ *         - productPeakPower
+ *         - uid
+ *         - tempCoff 
+ *         - systemLoss
+ *         - area
+ *         - nomTemp
+ *       example:
+ *         projectName: Mac
+ *         productPeakPower: 670
+ *         uid: 10
+ *         tempCoff: -0.3
+ *         systemLoss: 0.14
+ *         area: 2.4
+ *         nomTemp: 43
+ *         
+ */
+
+/**
+ * @swagger
  * /{Uid}/createProduct:
  *   post:
  *     summary: Create a product
  *     tags: [Company]
  *     security:
  *       - bearerAuth: []
- *     parameters:
- *       - in: path
- *         name: Uid
- *         schema:
- *           type: string
- *         required: true
- *         description: The user ID
  *     requestBody:
  *       required: true
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/CreateProduct'
+ *             $ref: '#/components/schemas/createProduct'
  *     responses:
  *       200:
  *         description: Product created successfully
@@ -1018,7 +1095,7 @@ router.post('/:Uid/createProduct', passport.authenticate('jwt', { session: false
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/DeleteProduct'
+ *             $ref: '#/components/schemas/DeleteProjectOrProduct'
  *     responses:
  *       200:
  *         description: Product deleted successfully
