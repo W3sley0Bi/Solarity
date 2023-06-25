@@ -28,8 +28,8 @@ const sendEmail = async (idUser, html, attachments) => {
     const mailOptions = {
       from: config.emails.sender,
       to: config.emails.receivers,
-      subject: "Report ",
-      html: html, //html page
+      subject: "Report",
+      html: html,
       attachments: attachments,
       /*
         let attachments = [{
