@@ -1,9 +1,8 @@
 const { PDFDocument, drawRectangle, rgb, degrees, drawImage } = require('pdf-lib')
  const fs = require('fs/promises');
-// const { db } = require('../../modules/DBConnection')
+ 
 const nodemailer = require('nodemailer');
 const config = require("../../../config");
-// const { google }= require("googleapis")
 
 async function fillPDF(req, res, next) {
 let bodyData =  JSON.parse(req.body.pdfData)
