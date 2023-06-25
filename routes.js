@@ -8,10 +8,8 @@
 
 // // passport.authenticate('jwt', { session: false }),
 
-
-
 // // Auth //////////////////////////////////////////////
-// router.post('/registration', async (req,res,next) =>{    
+// router.post('/registration', async (req,res,next) =>{
 //    await auth.registration(req,res,next)
 // });
 
@@ -19,40 +17,38 @@
 //   await auth.getPools(req,res,next);
 // });
 
-// router.post('/login', async (req,res,next) =>{    
+// router.post('/login', async (req,res,next) =>{
 //     await auth.login(req,res,next);
 // });
 
-// router.post('/deleteProfile', passport.authenticate('jwt', { session: false }), async (req,res,next) =>{    
+// router.post('/deleteProfile', passport.authenticate('jwt', { session: false }), async (req,res,next) =>{
 //     await auth.deleteProfile(req,res,next);
 // });
 
-// router.post('/updateUsername', passport.authenticate('jwt', { session: false }), async (req,res,next) =>{    
+// router.post('/updateUsername', passport.authenticate('jwt', { session: false }), async (req,res,next) =>{
 //     await auth.updateUsername(req,res,next);
 // });
-// router.post('/updateEmail', passport.authenticate('jwt', { session: false }), async (req,res,next) =>{    
+// router.post('/updateEmail', passport.authenticate('jwt', { session: false }), async (req,res,next) =>{
 //     await auth.updateEmail(req,res,next);
 // });
-// router.post('/updatePassword', passport.authenticate('jwt', { session: false }), async (req,res,next) =>{    
+// router.post('/updatePassword', passport.authenticate('jwt', { session: false }), async (req,res,next) =>{
 //     await auth.updatePassword(req,res,next);
 // });
 
-// router.post('/showProfile', passport.authenticate('jwt', { session: false }), async (req,res,next) =>{    
+// router.post('/showProfile', passport.authenticate('jwt', { session: false }), async (req,res,next) =>{
 //     await auth.showProfile(req,res,next);
 // });
 
-// router.post('/updateToPremium', passport.authenticate('jwt', { session: false }), async (req,res,next) =>{    
+// router.post('/updateToPremium', passport.authenticate('jwt', { session: false }), async (req,res,next) =>{
 //     await auth.updateToPremium(req,res,next);
 // });
 
-
-// router.get('/showSoftDeleteAccounts', async (req,res,next) =>{    
+// router.get('/showSoftDeleteAccounts', async (req,res,next) =>{
 //     await auth.showSoftDeleteAccounts(req,res,next);
 // });
 
-
 // // Users /////////////////////////////////////////////
-// router.get('/workers', passport.authenticate('jwt', { session: false }), async (req,res,next) =>{    
+// router.get('/workers', passport.authenticate('jwt', { session: false }), async (req,res,next) =>{
 //     await user.workers(req,res,next);
 // });
 
@@ -71,7 +67,6 @@
 // router.get('/closedUserFolder/:Uid', passport.authenticate('jwt', { session: false }), async (req,res,next)=>{
 //     await user.closedUserFolder(req,res,next);
 // })
-
 
 // router.get('/userFolder/update/:Uid/:Content', passport.authenticate('jwt', { session: false }), async (req,res,next)=>{
 //     await user.userDateForUpdate(req,res,next);
@@ -99,22 +94,17 @@
 // });
 // // router.post(`/formSign`, passport.authenticate('jwt', { session: false }),async (req,res,next)=>{
 // // 	await form.fillPDF(req,res,next);
-    
+
 // // });
-
-
 
 // router.post(`/deleteProject`, passport.authenticate('jwt', { session: false }),async (req,res,next)=>{
 // 	await deleteProject(req,res,next);
-    
+
 // });
 
-// router.get('/getAllProducts', passport.authenticate('jwt', { session: false }), async (req,res,next) =>{    
+// router.get('/getAllProducts', passport.authenticate('jwt', { session: false }), async (req,res,next) =>{
 //     await user.getAllProducts(req,res,next);
 // });
-
-
-
 
 // // Company ///////////////////////////////////////
 
@@ -128,24 +118,22 @@
 
 // router.post(`/deleteProduct`, passport.authenticate('jwt', { session: false }),async (req,res,next)=>{
 // 	await deleteProduct(req,res,next);
-    
+
 // });
-
-
-
 
 // module.exports = router;
 
-
-
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const auth = require('./src/api/auth/auth');
-const user = require('./src/api/user/user');
-const form = require('./src/api/formHandler/fillPDF')
-const passport = require('passport');
-const {deleteProject, deleteProduct} = require('./src/api/delete/deleteFunctions')
-const pythonBack = require('./src/api/pythonBackend/pythonBackendCalc')
+const auth = require("./src/api/auth/auth");
+const user = require("./src/api/user/user");
+const form = require("./src/api/formHandler/fillPDF");
+const passport = require("passport");
+const {
+  deleteProject,
+  deleteProduct,
+} = require("./src/api/delete/deleteFunctions");
+const pythonBack = require("./src/api/pythonBackend/pythonBackendCalc");
 
 /**
  * @swagger
@@ -163,7 +151,7 @@ const pythonBack = require('./src/api/pythonBackend/pythonBackendCalc')
  *         password: 12345
  *         email: MichaelJordan@nba.com
  *         role: 2
- * 
+ *
  */
 
 /**
@@ -191,8 +179,8 @@ const pythonBack = require('./src/api/pythonBackend/pythonBackendCalc')
  *       500:
  *         description: Internal server error
  */
-router.post('/registration', async (req,res,next) =>{    
-   await auth.registration(req,res,next)
+router.post("/registration", async (req, res, next) => {
+  await auth.registration(req, res, next);
 });
 
 /**
@@ -208,7 +196,6 @@ router.post('/registration', async (req,res,next) =>{
  *         username: Michael
  *         password: "12345"
  */
-
 
 /**
  * @swagger
@@ -228,25 +215,25 @@ router.post('/registration', async (req,res,next) =>{
  *       500:
  *         description: Internal server error
  */
-router.post('/login', async (req,res,next) =>{    
-    await auth.login(req,res,next);
+router.post("/login", async (req, res, next) => {
+  await auth.login(req, res, next);
 });
 
 //securitySchema
 
 /**
  * @swagger
- * 
+ *
  * components:
  *      securitySchemes:
- *          bearerAuth:          
+ *          bearerAuth:
  *              type: http
  *              scheme: bearer
- *              bearerFormat: JWT 
- * 
- * 
- * 
- * 
+ *              bearerFormat: JWT
+ *
+ *
+ *
+ *
  */
 
 /**
@@ -287,9 +274,13 @@ router.post('/login', async (req,res,next) =>{
  *       500:
  *         description: Internal server error
  */
-router.post('/deleteProfile', passport.authenticate('jwt', { session: false }), async (req,res,next) =>{    
-    await auth.deleteProfile(req,res,next);
-});
+router.post(
+  "/deleteProfile",
+  passport.authenticate("jwt", { session: false }),
+  async (req, res, next) => {
+    await auth.deleteProfile(req, res, next);
+  }
+);
 
 /**
  * @swagger
@@ -310,10 +301,8 @@ router.post('/deleteProfile', passport.authenticate('jwt', { session: false }), 
  *       example:
  *         uid: 15
  *         data: "Jordan"
- *         
+ *
  */
-
-
 
 /**
  * @swagger
@@ -337,9 +326,13 @@ router.post('/deleteProfile', passport.authenticate('jwt', { session: false }), 
  *       500:
  *         description: Internal server error
  */
-router.post('/updateUsername', passport.authenticate('jwt', { session: false }), async (req,res,next) =>{    
-    await auth.updateUsername(req,res,next);
-});
+router.post(
+  "/updateUsername",
+  passport.authenticate("jwt", { session: false }),
+  async (req, res, next) => {
+    await auth.updateUsername(req, res, next);
+  }
+);
 
 /**
  * @swagger
@@ -360,7 +353,7 @@ router.post('/updateUsername', passport.authenticate('jwt', { session: false }),
  *       example:
  *         uid: 15
  *         data: "Lebron@lakers.com"
- *         
+ *
  */
 
 /**
@@ -385,9 +378,13 @@ router.post('/updateUsername', passport.authenticate('jwt', { session: false }),
  *       500:
  *         description: Internal server error
  */
-router.post('/updateEmail', passport.authenticate('jwt', { session: false }), async (req,res,next) =>{    
-    await auth.updateEmail(req,res,next);
-});
+router.post(
+  "/updateEmail",
+  passport.authenticate("jwt", { session: false }),
+  async (req, res, next) => {
+    await auth.updateEmail(req, res, next);
+  }
+);
 
 /**
  * @swagger
@@ -408,7 +405,7 @@ router.post('/updateEmail', passport.authenticate('jwt', { session: false }), as
  *       example:
  *         uid: 15
  *         data: "12345"
- *         
+ *
  */
 
 /**
@@ -433,9 +430,13 @@ router.post('/updateEmail', passport.authenticate('jwt', { session: false }), as
  *       500:
  *         description: Internal server error
  */
-router.post('/updatePassword', passport.authenticate('jwt', { session: false }), async (req,res,next) =>{    
-    await auth.updatePassword(req,res,next);
-});
+router.post(
+  "/updatePassword",
+  passport.authenticate("jwt", { session: false }),
+  async (req, res, next) => {
+    await auth.updatePassword(req, res, next);
+  }
+);
 
 /**
  * @swagger
@@ -454,7 +455,7 @@ router.post('/updatePassword', passport.authenticate('jwt', { session: false }),
  *           description: User data to modify
  *       example:
  *         Uid: 15
- *         
+ *
  */
 
 /**
@@ -479,9 +480,13 @@ router.post('/updatePassword', passport.authenticate('jwt', { session: false }),
  *       500:
  *         description: Internal server error
  */
-router.post('/showProfile', passport.authenticate('jwt', { session: false }), async (req,res,next) =>{    
-    await auth.showProfile(req,res,next);
-});
+router.post(
+  "/showProfile",
+  passport.authenticate("jwt", { session: false }),
+  async (req, res, next) => {
+    await auth.showProfile(req, res, next);
+  }
+);
 
 /**
  * @swagger
@@ -500,7 +505,7 @@ router.post('/showProfile', passport.authenticate('jwt', { session: false }), as
  *           description: User data to modify
  *       example:
  *         uid: 15
- *         
+ *
  */
 
 /**
@@ -525,9 +530,13 @@ router.post('/showProfile', passport.authenticate('jwt', { session: false }), as
  *       500:
  *         description: Internal server error
  */
-router.post('/updateToPremium', passport.authenticate('jwt', { session: false }), async (req,res,next) =>{    
-    await auth.updateToPremium(req,res,next);
-});
+router.post(
+  "/updateToPremium",
+  passport.authenticate("jwt", { session: false }),
+  async (req, res, next) => {
+    await auth.updateToPremium(req, res, next);
+  }
+);
 
 /**
  * @swagger
@@ -541,13 +550,17 @@ router.post('/updateToPremium', passport.authenticate('jwt', { session: false })
  *       500:
  *         description: Internal server error
  */
-router.get('/showSoftDeleteAccounts', async (req,res,next) =>{    
-    await auth.showSoftDeleteAccounts(req,res,next);
+router.get("/showSoftDeleteAccounts", async (req, res, next) => {
+  await auth.showSoftDeleteAccounts(req, res, next);
 });
 
-router.get('/workers', passport.authenticate('jwt', { session: false }), async (req,res,next) =>{    
-    await user.workers(req,res,next);
-});
+router.get(
+  "/workers",
+  passport.authenticate("jwt", { session: false }),
+  async (req, res, next) => {
+    await user.workers(req, res, next);
+  }
+);
 
 /**
  * @swagger
@@ -563,7 +576,7 @@ router.get('/workers', passport.authenticate('jwt', { session: false }), async (
  *         uid: 15
  *         projectName: Titan
  *         projectDuration: 30
- *         
+ *
  */
 
 /**
@@ -588,10 +601,13 @@ router.get('/workers', passport.authenticate('jwt', { session: false }), async (
  *       500:
  *         description: Internal server error
  */
-router.post('/:Uid/createProject', passport.authenticate('jwt', { session: false }),async(req, res, next)=>{
-    await user.createProject(req,res,next);
-});
-
+router.post(
+  "/:Uid/createProject",
+  passport.authenticate("jwt", { session: false }),
+  async (req, res, next) => {
+    await user.createProject(req, res, next);
+  }
+);
 
 /**
  * @swagger
@@ -616,9 +632,13 @@ router.post('/:Uid/createProject', passport.authenticate('jwt', { session: false
  *       500:
  *         description: Internal server error
  */
-router.get('/userFolder/:Uid', passport.authenticate('jwt', { session: false }), async (req,res,next)=>{
-    await user.userFolder(req,res,next);
-});
+router.get(
+  "/userFolder/:Uid",
+  passport.authenticate("jwt", { session: false }),
+  async (req, res, next) => {
+    await user.userFolder(req, res, next);
+  }
+);
 
 /**
  * @swagger
@@ -643,9 +663,13 @@ router.get('/userFolder/:Uid', passport.authenticate('jwt', { session: false }),
  *       500:
  *         description: Internal server error
  */
-router.get('/openUserFolder/:Uid', passport.authenticate('jwt', { session: false }), async (req,res,next)=>{
-    await user.opendUserFolder(req,res,next);
-});
+router.get(
+  "/openUserFolder/:Uid",
+  passport.authenticate("jwt", { session: false }),
+  async (req, res, next) => {
+    await user.opendUserFolder(req, res, next);
+  }
+);
 
 /**
  * @swagger
@@ -670,10 +694,76 @@ router.get('/openUserFolder/:Uid', passport.authenticate('jwt', { session: false
  *       500:
  *         description: Internal server error
  */
-router.get('/closedUserFolder/:Uid', passport.authenticate('jwt', { session: false }), async (req,res,next)=>{
-    await user.closedUserFolder(req,res,next);
-});
+router.get(
+  "/closedUserFolder/:Uid",
+  passport.authenticate("jwt", { session: false }),
+  async (req, res, next) => {
+    await user.closedUserFolder(req, res, next);
+  }
+);
 
+/**
+ * @swagger
+ * /closedUserFolder/{Uid}:
+ *   get:
+ *     summary: Closed user folder
+ *     tags: [Users]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: Uid
+ *         required: true
+ *         description: User ID
+ *         schema:
+ *           $ref: '#/components/schemas/uid'
+ *     responses:
+ *       200:
+ *         description: User folder with project in progress
+ *       401:
+ *         description: Unauthorized request
+ *       500:
+ *         description: Internal server error
+ */
+router.get(
+  "/inProgressUserFolder/:Uid",
+  passport.authenticate("jwt", { session: false }),
+  async (req, res, next) => {
+    await user.inProgressUserFolder(req, res, next);
+  }
+);
+
+
+/**
+ * @swagger
+ * /startCalculations:
+ *   post:
+ *     summary: Closed user folder
+ *     tags: [Users]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: Uid
+ *         required: true
+ *         description: User ID
+ *         schema:
+ *           $ref: '#/components/schemas/uid'
+ *     responses:
+ *       200:
+ *         description: User folder with project in progress
+ *       401:
+ *         description: Unauthorized request
+ *       500:
+ *         description: Internal server error
+ */
+router.post(
+    "/startCalculations",
+    passport.authenticate("jwt", { session: false }),
+    async (req, res, next) => {
+      await user.startCalculations(req, res, next);
+    }
+  );
 
 
 /**
@@ -705,10 +795,13 @@ router.get('/closedUserFolder/:Uid', passport.authenticate('jwt', { session: fal
  *       500:
  *         description: Internal server error
  */
-router.get('/userFolder/update/:Uid/:Content', passport.authenticate('jwt', { session: false }), async (req,res,next)=>{
-    await user.userDateForUpdate(req,res,next);
-});
-
+router.get(
+  "/userFolder/update/:Uid/:Content",
+  passport.authenticate("jwt", { session: false }),
+  async (req, res, next) => {
+    await user.userDateForUpdate(req, res, next);
+  }
+);
 
 /**
  * @swagger
@@ -739,10 +832,13 @@ router.get('/userFolder/update/:Uid/:Content', passport.authenticate('jwt', { se
  *       500:
  *         description: Internal server error
  */
-router.get(`/userFolder/:Uid/:Content`, passport.authenticate('jwt', { session: false }),async (req,res,next)=>{
-	await user.getProjectContent(req,res,next);
-});
-
+router.get(
+  `/userFolder/:Uid/:Content`,
+  passport.authenticate("jwt", { session: false }),
+  async (req, res, next) => {
+    await user.getProjectContent(req, res, next);
+  }
+);
 
 /**
  * @swagger
@@ -764,7 +860,7 @@ router.get(`/userFolder/:Uid/:Content`, passport.authenticate('jwt', { session: 
  *         tilt: 45
  *         orientation: W
  *         company_product_id: 1
- *         
+ *
  */
 
 /**
@@ -795,9 +891,13 @@ router.get(`/userFolder/:Uid/:Content`, passport.authenticate('jwt', { session: 
  *       500:
  *         description: Internal server error
  */
-router.post(`/userFolder/:Uid/:Content/addProduct`, passport.authenticate('jwt', { session: false }),async (req,res,next)=>{
-	await user.addProduct(req,res,next);
-});
+router.post(
+  `/userFolder/:Uid/:Content/addProduct`,
+  passport.authenticate("jwt", { session: false }),
+  async (req, res, next) => {
+    await user.addProduct(req, res, next);
+  }
+);
 
 /**
  * @swagger
@@ -821,7 +921,7 @@ router.post(`/userFolder/:Uid/:Content/addProduct`, passport.authenticate('jwt',
  *         orientation: E
  *         company_product_id: 1
  *         field_product_id: 50
- *         
+ *
  */
 
 /**
@@ -852,9 +952,13 @@ router.post(`/userFolder/:Uid/:Content/addProduct`, passport.authenticate('jwt',
  *       500:
  *         description: Internal server error
  */
-router.post(`/userFolder/:Uid/:Content/updateProduct`, passport.authenticate('jwt', { session: false }),async (req,res,next)=>{
-	await user.updatedProduct(req,res,next);
-});
+router.post(
+  `/userFolder/:Uid/:Content/updateProduct`,
+  passport.authenticate("jwt", { session: false }),
+  async (req, res, next) => {
+    await user.updatedProduct(req, res, next);
+  }
+);
 
 /**
  * @swagger
@@ -870,9 +974,8 @@ router.post(`/userFolder/:Uid/:Content/updateProduct`, passport.authenticate('jw
  *         idProject: 33
  *         projectName: Titan
  *         projectDuration: 30
- *         
+ *
  */
-
 
 /**
  * @swagger
@@ -896,9 +999,13 @@ router.post(`/userFolder/:Uid/:Content/updateProduct`, passport.authenticate('jw
  *       500:
  *         description: Internal server error
  */
-router.post(`/:Uid/updateProject`, passport.authenticate('jwt', { session: false }),async(req, res, next)=>{
-    await user.updatedProject(req,res,next);
-});
+router.post(
+  `/:Uid/updateProject`,
+  passport.authenticate("jwt", { session: false }),
+  async (req, res, next) => {
+    await user.updatedProject(req, res, next);
+  }
+);
 
 /**
  * @swagger
@@ -912,9 +1019,8 @@ router.post(`/:Uid/updateProject`, passport.authenticate('jwt', { session: false
  *       example:
  *         field_product_id: 50
  *         project_id: 33
- *         
+ *
  */
-
 
 /**
  * @swagger
@@ -938,9 +1044,13 @@ router.post(`/:Uid/updateProject`, passport.authenticate('jwt', { session: false
  *       500:
  *         description: Internal server error
  */
-router.post(`/deleteProjectContentElement`, passport.authenticate('jwt', { session: false }),async (req,res,next)=>{
-	await user.deleteProjectContentElement(req,res,next);
-});
+router.post(
+  `/deleteProjectContentElement`,
+  passport.authenticate("jwt", { session: false }),
+  async (req, res, next) => {
+    await user.deleteProjectContentElement(req, res, next);
+  }
+);
 
 /**
  * @swagger
@@ -956,7 +1066,7 @@ router.post(`/deleteProjectContentElement`, passport.authenticate('jwt', { sessi
  *           description: project ID
  *       example:
  *         id: 33
- *         
+ *
  */
 
 /**
@@ -981,9 +1091,13 @@ router.post(`/deleteProjectContentElement`, passport.authenticate('jwt', { sessi
  *       500:
  *         description: Internal server error
  */
-router.post(`/deleteProject`, passport.authenticate('jwt', { session: false }),async (req,res,next)=>{
-	await deleteProject(req,res,next);
-});
+router.post(
+  `/deleteProject`,
+  passport.authenticate("jwt", { session: false }),
+  async (req, res, next) => {
+    await deleteProject(req, res, next);
+  }
+);
 
 /**
  * @swagger
@@ -1001,9 +1115,13 @@ router.post(`/deleteProject`, passport.authenticate('jwt', { session: false }),a
  *        500:
  *          description: Internal server error
  */
-router.get('/getAllProducts', passport.authenticate('jwt', { session: false }), async (req,res,next) =>{    
-    await user.getAllProducts(req,res,next);
-});
+router.get(
+  "/getAllProducts",
+  passport.authenticate("jwt", { session: false }),
+  async (req, res, next) => {
+    await user.getAllProducts(req, res, next);
+  }
+);
 
 /**
  * @swagger
@@ -1028,9 +1146,13 @@ router.get('/getAllProducts', passport.authenticate('jwt', { session: false }), 
  *       500:
  *         description: Internal server error
  */
-router.get('/companyFolder/:Uid', passport.authenticate('jwt', { session: false }), async (req,res,next)=>{
-    await user.companyDash(req,res,next);
-});
+router.get(
+  "/companyFolder/:Uid",
+  passport.authenticate("jwt", { session: false }),
+  async (req, res, next) => {
+    await user.companyDash(req, res, next);
+  }
+);
 
 /**
  * @swagger
@@ -1042,7 +1164,7 @@ router.get('/companyFolder/:Uid', passport.authenticate('jwt', { session: false 
  *         - projectName
  *         - productPeakPower
  *         - uid
- *         - tempCoff 
+ *         - tempCoff
  *         - systemLoss
  *         - area
  *         - nomTemp
@@ -1054,7 +1176,7 @@ router.get('/companyFolder/:Uid', passport.authenticate('jwt', { session: false 
  *         systemLoss: 0.14
  *         area: 2.4
  *         nomTemp: 43
- *         
+ *
  */
 
 /**
@@ -1079,9 +1201,13 @@ router.get('/companyFolder/:Uid', passport.authenticate('jwt', { session: false 
  *       500:
  *         description: Internal server error
  */
-router.post('/:Uid/createProduct', passport.authenticate('jwt', { session: false }),async(req, res, next)=>{
-    await user.createProduct(req,res,next);
-});
+router.post(
+  "/:Uid/createProduct",
+  passport.authenticate("jwt", { session: false }),
+  async (req, res, next) => {
+    await user.createProduct(req, res, next);
+  }
+);
 
 /**
  * @swagger
@@ -1105,13 +1231,13 @@ router.post('/:Uid/createProduct', passport.authenticate('jwt', { session: false
  *       500:
  *         description: Internal server error
  */
-router.post(`/deleteProduct`, passport.authenticate('jwt', { session: false }),async (req,res,next)=>{
-	await deleteProduct(req,res,next);
-});
-
-
-
-
+router.post(
+  `/deleteProduct`,
+  passport.authenticate("jwt", { session: false }),
+  async (req, res, next) => {
+    await deleteProduct(req, res, next);
+  }
+);
 
 // PYTHON BACKEND API
 
@@ -1121,7 +1247,6 @@ router.post(`/deleteProduct`, passport.authenticate('jwt', { session: false }),a
  *   name: PythonBackend
  *   description: Calls to a remote python server 4 calculations
  */
-
 
 /**
  * @swagger
@@ -1150,10 +1275,13 @@ router.post(`/deleteProduct`, passport.authenticate('jwt', { session: false }),a
  *       500:
  *         description: Internal server error
  */
-router.get(`/getUTC`, passport.authenticate('jwt', { session: false }), async (req,res,next)=>{
-	await pythonBack.getUTC(req,res,next);
-});
-
+router.get(
+  `/getUTC`,
+  passport.authenticate("jwt", { session: false }),
+  async (req, res, next) => {
+    await pythonBack.getUTC(req, res, next);
+  }
+);
 
 /**
  * @swagger
@@ -1166,7 +1294,7 @@ router.get(`/getUTC`, passport.authenticate('jwt', { session: false }), async (r
  *     parameters:
  *       - in: query
  *         name: location
- *         schema: 
+ *         schema:
  *         required: true
  *         description: location
  *     responses:
@@ -1177,15 +1305,12 @@ router.get(`/getUTC`, passport.authenticate('jwt', { session: false }), async (r
  *       500:
  *         description: Internal server error
  */
-router.get(`/locationsearch`,passport.authenticate('jwt', { session: false }), async (req,res,next)=>{
-	await pythonBack.locationsearch(req,res,next);
-});
-
-
-
+router.get(
+  `/locationsearch`,
+  passport.authenticate("jwt", { session: false }),
+  async (req, res, next) => {
+    await pythonBack.locationsearch(req, res, next);
+  }
+);
 
 module.exports = router;
-
-
-
-
