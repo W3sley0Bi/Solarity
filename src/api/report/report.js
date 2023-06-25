@@ -2,20 +2,13 @@ const nodemailer = require("nodemailer");
 const config = require("../../../config");
 const { db } = require("../../modules/DBConnection");
 
-const sendEmail = async (idUser, html, attachments) => {
+const reportGeneration = async () =>{
+
+} 
+
+
+const sendEmail = async (UserEmail) => {
   try {
-    const userEmail = await new Promise((resolve, reject) => {
-      db.query(
-        `SELECT email FROM user WHERE idUser='${idUser}'`,
-        (err, result, fields) => {
-          if (err) {
-            reject(err);
-          } else {
-            resolve(result);
-          }
-        }
-      );
-    });
 
     const transporter = nodemailer.createTransport({
       service: "gmail",
@@ -27,7 +20,7 @@ const sendEmail = async (idUser, html, attachments) => {
 
     const mailOptions = {
       from: config.emails.sender,
-      to: config.emails.receivers,
+      to: UserEmail,
       subject: "Report",
       html: html,
       attachments: attachments,
@@ -46,6 +39,25 @@ const sendEmail = async (idUser, html, attachments) => {
     console.log(error);
   }
 };
+
+const fetchDBReport = async (idProject) =>{
+  const data = await new Promise((resolve, reject) => {
+    db.query(
+      `SELECT email, field_product_id, orientation, tilt, cp.name as company_product_name, projects.name as projName, date as energy_date,pvoutput
+from projects inner join user on projects.assigned_user_id = user.idUser inner join field_product on field_product.project_id = projects.idProject inner join pv_energy on pv_energy.project_id = idProject and pv_energy.product_id = field_product_id inner join company_product cp on field_product.company_product_id = cp.product_id WHERE idProject='${idProject}'`,
+      (err, result, fields) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(result);
+        }
+      }
+    );
+  });
+
+  sendEmail(data[0].email)
+}  
+
 // let html = `<!DOCTYPE html>
 // <html>
 // <head>
@@ -276,7 +288,8 @@ const sendEmail = async (idUser, html, attachments) => {
 // sendEmail(7,'<h1>test</h1>',[{filename: "Test Hello" ,content: html, contentType: "text/html"}]);
 
 module.exports = {
-  sendEmail,
+fetchDBReport
+
 };
 
 

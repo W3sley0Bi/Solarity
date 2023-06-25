@@ -1,6 +1,6 @@
 const config = require("../../../config");
 const { db } = require("../../modules/DBConnection");
-
+const { pythonClac } = require("../pythonBackend/pythonBackendCalc")
 // super user //////////////////////////////////////////
 
 //test user list api for super user
@@ -130,12 +130,16 @@ async function getProjectContent(req, res, next) {
 //define python fun
 
 async function startCalculations(req, res, next){
+  // porjectID: req.body.id
+  // project duration: req.body.duration
+  // project forcedCalc : req.body.forcedCalc
   try {
     db.query(
       `UPDATE projects SET status='1' WHERE idProject = '${req.body.id}' `,
       (err, result, fields) => {
         if (err) throw err;
-//usd python fun
+        if (req.body.forcedCalc == true) {pythonClac(req.body.id,req.body.duration)}
+        
         res.status(200).json({ message: "Calculations started" });
       }
     );

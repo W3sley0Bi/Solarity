@@ -1,5 +1,8 @@
 const axios = require('axios')
 const config = require("../../../config");
+const { db } = require("../../modules/DBConnection");
+const { fetchDBReport } = require("../report/report");
+
 
 async function getUTC(req, res, next){
 try {
@@ -22,8 +25,32 @@ async function locationsearch(req, res, next){
     }
 }
 
+
+async function pythonClac(idProj, duration){
+    try {
+        const response = await axios.post(`${config.pythonServer}/forceweather`, {
+            idProj: idProj,
+            duration: duration
+          })
+          console.log(response.data,response.status)
+        if(response.data == 200){
+                db.query(
+                  `UPDATE projects SET status='2' WHERE idProject = '${idProj}' `,
+                  async (err, result, fields) => {
+                    if (err) throw err;
+                    await fetchDBReport(idProj)
+                    return null
+                  }
+                );
+        }
+    } catch (error) {
+        console.warn(error)
+    }
+}
+
 module.exports = {
     getUTC,
-    locationsearch
+    locationsearch,
+    pythonClac
   };
 
