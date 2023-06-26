@@ -140,6 +140,7 @@ async function startCalculations(req, res, next){
       (err, result, fields) => {
         if (err) throw err;
         if (req.body.forcedCalc == true) {pythonClac(req.body.id,req.body.duration)}
+        if(req.body.forcedCalc == false) {}
         
         res.status(200).json({ message: "Calculations started" });
       }
