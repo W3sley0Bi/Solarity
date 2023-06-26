@@ -256,7 +256,7 @@ const reportGeneration = async (array) =>{
               scales: {
                 y: {
                   beginAtZero: true,
-                  max: 3,
+                  max: 5,
                   stepSize: 10,
                   title: {
                     display: true,
