@@ -46,8 +46,26 @@ async function pythonClac(idProj, duration) {
   }
 }
 
+async function syncWeather(uid) {
+    try {
+      const response = await axios.post(`${config.pythonServer}/forcesync`, {
+        userID: uid
+      });
+      console.log(response.data, response.status);
+      if (response.data == 200) {
+        return null
+      }
+    } catch (error) {
+      console.warn(error);
+    }
+  }
+  
+
+
+
 module.exports = {
   getUTC,
   locationsearch,
   pythonClac,
+  syncWeather
 };

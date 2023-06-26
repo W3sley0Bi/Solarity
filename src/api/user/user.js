@@ -1,6 +1,7 @@
 const config = require("../../../config");
 const { db } = require("../../modules/DBConnection");
 const { pythonClac } = require("../pythonBackend/pythonBackendCalc");
+const { syncWeather } = require("../pythonBackend/pythonBackendCalc");
 const { fetchDBReport_toShow } = require("../report/report");
 // super user //////////////////////////////////////////
 
@@ -145,6 +146,21 @@ async function startCalculations(req, res, next){
         res.status(200).json({ message: "Calculations started" });
       }
     );
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+    next(err);
+  }
+}
+
+
+async function forceSync(req, res, next){
+  // porjectID: req.body.id
+  // project duration: req.body.duration
+  // project forcedCalc : req.body.forcedCalc
+  try {
+    syncWeather(req.body.uid)
+    res.status(200).json({ message: "Weather Sync Done" })
+    ;
   } catch (err) {
     res.status(400).json({ message: err.message });
     next(err);
@@ -316,5 +332,6 @@ module.exports = {
   opendUserFolder,
   inProgressUserFolder,
   startCalculations,
-  getReport
+  getReport,
+  forceSync
 };
