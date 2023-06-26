@@ -1188,4 +1188,12 @@ router.get(
   }
 );
 
+router.get(
+  "/getReport/:pid",
+  passport.authenticate("jwt", { session: false }),
+  async (req, res, next) => {
+    await user.getReport(req, res, next);
+  }
+);
+
 module.exports = router;

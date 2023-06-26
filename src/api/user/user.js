@@ -1,6 +1,7 @@
 const config = require("../../../config");
 const { db } = require("../../modules/DBConnection");
-const { pythonClac } = require("../pythonBackend/pythonBackendCalc")
+const { pythonClac } = require("../pythonBackend/pythonBackendCalc");
+const { fetchDBReport_toShow } = require("../report/report");
 // super user //////////////////////////////////////////
 
 //test user list api for super user
@@ -287,6 +288,16 @@ async function updatedProduct(req, res, next) {
   }
 }
 
+async function getReport(req, res, next) {
+  try {
+    data = await fetchDBReport_toShow(req.params.pid)
+    res.status(200).json({ content: data})
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+    next(err);
+  }
+}
+
 module.exports = {
   workers,
   createProject,
@@ -303,5 +314,6 @@ module.exports = {
   closedUserFolder,
   opendUserFolder,
   inProgressUserFolder,
-  startCalculations
+  startCalculations,
+  getReport
 };
