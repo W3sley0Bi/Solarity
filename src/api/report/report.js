@@ -95,9 +95,14 @@ const reportGeneration = async (array) =>{
     
           // Group data by field_product_id and create an array of energy_dates and pvoutputs
           const groupedData = dataArray.reduce((groups, data) => {
-            const { field_product_id, energy_date, pvoutput, ...otherValues} = data;
+            const { field_product_id, energy_date, pvoutput, ...otherValues } =
+              data;
             if (!groups[field_product_id]) {
-              groups[field_product_id] = { energy_dates: [], pvoutputs: [], ...otherValues};
+              groups[field_product_id] = {
+                energy_dates: [],
+                pvoutputs: [],
+                ...otherValues,
+              };
             }
             groups[field_product_id].energy_dates.push(energy_date);
             groups[field_product_id].pvoutputs.push(pvoutput);
@@ -108,12 +113,9 @@ const reportGeneration = async (array) =>{
           const groupedArray = Object.entries(groupedData).map(
             ([field_product_id, values]) => ({
               field_product_id: parseInt(field_product_id),
-              ...values
-    
+              ...values,
             })
           );
-    
-    
     
           // Print the grouped array
           console.log(groupedArray);
@@ -151,15 +153,11 @@ const reportGeneration = async (array) =>{
     
               const orientationSpan = document.createElement("span");
               let orient;
-              if(product.orientation === "S")
-                orient = "South"
-              else if(product.orientation === "E")
-                orient = "East"
-              else if(product.orientation === "W")
-                orient = "West"
-              else if(product.orientation === "N")
-                orient = "North"
-              
+              if (product.orientation === "S") orient = "South";
+              else if (product.orientation === "E") orient = "East";
+              else if (product.orientation === "W") orient = "West";
+              else if (product.orientation === "N") orient = "North";
+    
               orientationSpan.textContent = orient;
               productInfoDiv.appendChild(orientationSpan);
     
@@ -178,7 +176,6 @@ const reportGeneration = async (array) =>{
               const latitudeSpan = document.createElement("span");
               latitudeSpan.textContent = product.lat;
               productInfoDiv.appendChild(latitudeSpan);
-              
     
               productDiv.appendChild(productInfoDiv);
     
@@ -214,17 +211,49 @@ const reportGeneration = async (array) =>{
               const maxDateLabel = document.createElement("label");
               maxDateLabel.textContent = "Maximum Energy Output:";
               productInfoDiv.appendChild(maxDateLabel);
-              max = 0
-              for(var i = 0; i < energyOutputData.values.length; i++){
-                console.log(energyOutputData.values[i])
-                console.log(energyOutputData.values[max])
-                if(energyOutputData.values[i] > energyOutputData.values[max])
+              max = 0;
+              for (var i = 0; i < energyOutputData.values.length; i++) {
+                console.log(energyOutputData.values[i]);
+                console.log(energyOutputData.values[max]);
+                if (energyOutputData.values[i] > energyOutputData.values[max])
                   max = i;
               }
     
               const maxDateSpan = document.createElement("span");
-              maxDateSpan.textContent = energyOutputData.labels[max] + " -- " + energyOutputData.values[max].toFixed(2) + " KW-h";
+              maxDateSpan.textContent =
+                energyOutputData.labels[max] +
+                " -- " +
+                energyOutputData.values[max].toFixed(2) +
+                " KW-h";
               productInfoDiv.appendChild(maxDateSpan);
+    
+              // Check the number of dates
+              if (energyOutputData.labels.length > 60) {
+                // Create a new object to store month names as keys and summed values as values
+                const monthlyData = {};
+    
+                // Iterate over the original arrays
+                for (let i = 0; i < energyOutputData.labels.length; i++) {
+                  const date = new Date(energyOutputData.labels[i]);
+                  const month = date.toLocaleString("default", { month: "long" });
+    
+                  if (!monthlyData.hasOwnProperty(month)) {
+                    monthlyData[month] = 0;
+                  }
+    
+                  monthlyData[month] += energyOutputData.values[i];
+                }
+    
+                // Update labels and values arrays
+                energyOutputData.labels.length = 0;
+                energyOutputData.values.length = 0;
+    
+                // Populate labels and values arrays with monthly data
+                for (const month in monthlyData) {
+                  energyOutputData.labels.push(month);
+                  energyOutputData.values.push(monthlyData[month]);
+                }
+              }
     
               renderEnergyOutputChart(energyOutputData, chartContainer);
             });
@@ -256,7 +285,7 @@ const reportGeneration = async (array) =>{
               scales: {
                 y: {
                   beginAtZero: true,
-                  max: 5,
+                  max: 6,
                   stepSize: 10,
                   title: {
                     display: true,
@@ -312,6 +341,7 @@ const reportGeneration = async (array) =>{
         </script>
       </body>
     </html>
+    
     
 `
 return html
