@@ -224,8 +224,24 @@ const reportGeneration = async (array) =>{
                 energyOutputData.labels[max] +
                 " -- " +
                 energyOutputData.values[max].toFixed(2) +
-                " KW-h";
+                " kW-h";
               productInfoDiv.appendChild(maxDateSpan);
+
+
+              const totalEnergyOutput = document.createElement("label");
+              totalEnergyOutput.textContent = "Total Energy Output:";
+              productInfoDiv.appendChild(totalEnergyOutput);
+
+
+              const sum = energyOutputData.values.reduce((acc, curr) => acc + curr, 0);
+
+              const totalDateSpan = document.createElement("span");
+              totalDateSpan.textContent =
+                sum.toFixed(2) +
+                " -- " +
+                " kW-h";
+              productInfoDiv.appendChild(totalDateSpan);
+
     
               // Check the number of dates
               if (energyOutputData.labels.length > 120) {
