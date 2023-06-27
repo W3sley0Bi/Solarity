@@ -88,7 +88,7 @@ const reportGeneration = async (array) =>{
         const dataArray = eval('${array}')
 
       
-
+        var maxc = 6
         // for (var i = 0; i < jsonData.counters.length; i++) {
           //   var counter = jsonData.counters[i];
           //   console.log(counter.counter_name);
@@ -228,13 +228,21 @@ const reportGeneration = async (array) =>{
               productInfoDiv.appendChild(maxDateSpan);
     
               // Check the number of dates
-              if (energyOutputData.labels.length > 60) {
+              if (energyOutputData.labels.length > 120) {
                 // Create a new object to store month names as keys and summed values as values
                 const monthlyData = {};
+                maxc = 120
     
                 // Iterate over the original arrays
                 for (let i = 0; i < energyOutputData.labels.length; i++) {
-                  const date = new Date(energyOutputData.labels[i]);
+                  var parts = energyOutputData.labels[i].split('/');
+                  // parts[0] -> day
+                  // parts[1] -> month
+                  // parts[2] -> year
+                
+                  // JavaScript months are 0-based, so we need to subtract 1 from the month
+                  var date = new Date(parts[2], parts[1] - 1, parts[0]);
+                
                   const month = date.toLocaleString("default", { month: "long" });
     
                   if (!monthlyData.hasOwnProperty(month)) {
@@ -285,7 +293,7 @@ const reportGeneration = async (array) =>{
               scales: {
                 y: {
                   beginAtZero: true,
-                  max: 6,
+                  max: maxc,
                   stepSize: 10,
                   title: {
                     display: true,
