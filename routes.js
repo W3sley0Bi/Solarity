@@ -1188,6 +1188,29 @@ router.get(
   }
 );
 
+/**
+ * @swagger
+ * /getReport/:pid:
+ *   get:
+ *     summary: retrive energy data
+ *     tags: [Users]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: project id
+ *         schema:
+ *         required: true
+ *         description: project id
+ *     responses:
+ *       200:
+ *         description: 
+ *       401:
+ *         description: 
+ *       500:
+ *         description: 
+ */
+
 router.get(
   `/getReport/:pid`,
   passport.authenticate("jwt", { session: false }),
@@ -1195,6 +1218,31 @@ router.get(
     await user.getReport(req, res, next);
   }
 );
+
+/**
+ * @swagger
+ * /forcesync:
+ *   post:
+ *     summary: retrive energy data
+ *     tags: [PythonBackend]
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/uid'  
+ *     responses:
+ *       200:
+ *         description: 
+ *       401:
+ *         description: 
+ *       500:
+ *         description: 
+ */
+
+
 
 router.post(
   `/forcesync`,
@@ -1204,6 +1252,33 @@ router.post(
   }
 );
 
+/**
+ * @swagger
+ * /userFolder/Company/:Uid/:Content:
+ *   get:
+ *     summary: retrive energy data
+ *     tags: [Company]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: User ID
+ *         schema:
+ *         required: true
+ *         description: user id
+ *       - in: path
+ *         name: Content ID
+ *         schema:
+ *         required: true
+ *         description: Content ID
+ *     responses:
+ *       200:
+ *         description: 
+ *       401:
+ *         description: 
+ *       500:
+ *         description: 
+ */
 router.get(
   `/userFolder/Company/:Uid/:Content`,
   passport.authenticate("jwt", { session: false }),
@@ -1212,7 +1287,45 @@ router.get(
   }
 );
 
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     ProductUpdate:
+ *       type: object
+ *       required:
+ *         - name
+ *         - data
+ *         - product_id
+ *       example:
+ *         name: 'Jinko Tiger Pro'
+ *         data: 'Jinko Tiger Pro Max Ultra'
+ *         product_id: 37
+ *
+ */
 
+/**
+ * @swagger
+ * /modifyCompanyData:
+ *   post:
+ *     summary: Update product data
+ *     tags: [Company]
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/ProductUpdate'  
+ *     responses:
+ *       200:
+ *         description: 
+ *       401:
+ *         description: 
+ *       500:
+ *         description: 
+ */
 
 router.post(
   `/modifyCompanyData`,
