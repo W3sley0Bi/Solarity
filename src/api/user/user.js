@@ -315,6 +315,46 @@ async function getReport(req, res, next) {
   }
 }
 
+async function getProductContent(req, res, next) {
+  try {
+    console.log(req.body)
+    db.query(
+      `SELECT * FROM company_product WHERE provider_id='${req.params.Uid}' AND product_id='${req.params.Content}'`,
+      (err, result, fields) => {
+        console.log(result)
+        if (err) throw err;
+        res.status(200).json(result);
+      }
+    );
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+    next(err);
+  }
+}
+
+async function modifyCompanyData(req, res, next) {
+
+  const keys = Object.keys(req.body);
+//   console.log(req.body)
+// console.log(typeof req.body.data)
+  try {
+
+    db.query(
+      `UPDATE company_product SET ${keys[0]}='${req.body.data}' WHERE product_id=${req.body.product_id}`,
+      (err, result, fields) => {
+        if (err) throw err;
+        res.status(200).json({ message: "Product Updated" });
+      }
+    );
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+    next(err);
+  }
+}
+
+
+
+
 module.exports = {
   workers,
   createProject,
@@ -333,5 +373,7 @@ module.exports = {
   inProgressUserFolder,
   startCalculations,
   getReport,
-  forceSync
+  forceSync,
+  getProductContent,
+  modifyCompanyData
 };

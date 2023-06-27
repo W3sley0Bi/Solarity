@@ -1204,4 +1204,23 @@ router.post(
   }
 );
 
+router.get(
+  `/userFolder/Company/:Uid/:Content`,
+  passport.authenticate("jwt", { session: false }),
+  async (req, res, next) => {
+    await user.getProductContent(req, res, next);
+  }
+);
+
+
+
+router.post(
+  `/modifyCompanyData`,
+  passport.authenticate("jwt", { session: false }),
+  async (req, res, next) => {
+    await user.modifyCompanyData(req, res, next);
+  }
+);
+
+
 module.exports = router;
