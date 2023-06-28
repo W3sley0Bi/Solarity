@@ -44,7 +44,14 @@ async function createProject(req, res, next) {
 async function opendUserFolder(req, res, next) {
   try {
     db.query(
-      `SELECT * FROM projects WHERE assigned_user_id = '${req.params.Uid}' AND status='0' `,
+      ` SELECT projects.*, COALESCE(counttbl.count, 0) AS count
+      FROM projects
+      LEFT JOIN (
+        SELECT project_id, COUNT(*) AS count
+        FROM field_product
+        GROUP BY project_id
+      ) AS counttbl ON counttbl.project_id = projects.idProject
+      WHERE assigned_user_id = '${req.params.Uid}' AND status='0'`,
       (err, result, fields) => {
         if (err) throw err;
         res.json(result);
@@ -72,7 +79,15 @@ async function closedUserFolder(req, res, next) {
 async function userFolder(req, res, next) {
   try {
     db.query(
-      `SELECT * FROM projects WHERE assigned_user_id = '${req.params.Uid}'`,
+      ` SELECT projects.*, COALESCE(counttbl.count, 0) AS count
+      FROM projects
+      LEFT JOIN (
+        SELECT project_id, COUNT(*) AS count
+        FROM field_product
+        GROUP BY project_id
+      ) AS counttbl ON counttbl.project_id = projects.idProject
+      WHERE assigned_user_id = '${req.params.Uid}'
+      ORDER BY projects.status`,
       (err, result, fields) => {
         if (err) throw err;
         res.json(result);
